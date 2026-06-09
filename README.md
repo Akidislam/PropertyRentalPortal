@@ -1,6 +1,8 @@
-# Property Rental Portal
+# PropertyWave | Elite Property Rental Portal
 
-A comprehensive full-stack web application for managing property rentals with support for landlords, tenants, and administrators. Built with Node.js/Express backend and React frontend.
+**Live Demo**: [https://property-rental-portal-ten.vercel.app](https://property-rental-portal-ten.vercel.app)
+
+A comprehensive, premium full-stack web application for managing property rentals with support for landlords, tenants, and administrators. Built with Node.js/Express backend and React frontend.
 
 ## 🎯 Features
 
@@ -230,5 +232,5 @@ For issues, questions, or suggestions, please open an issue on GitHub or contact
 
 ---
 
-**Last Updated**: June 9, 2026  
-**Version**: 1.0.0
+**Last Updated**: June 10, 2026  
+**Version**: 1.1.0 (Modernized UI & Responsive Design)
