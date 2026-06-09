@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
 import DashboardSidebar from '../components/DashboardSidebar';
@@ -25,7 +26,7 @@ const PropertyList = () => {
   const fetchProperties = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:5000/api/properties/approved');
+      const res = await axios.get(`${BASE_URL}/api/properties/approved`);
       setProperties(res.data);
     } catch (err) {
       showToast('error', '⚠️ Network synchronization failed. Listing unavailable.');
@@ -101,7 +102,7 @@ const PropertyList = () => {
                     >
                       <div className="relative h-64 overflow-hidden">
                         <img 
-                          src={property.images && property.images.length > 0 ? `http://localhost:5000${property.images[0]}` : 'https://via.placeholder.com/600x400?text=No+Image'} 
+                          src={property.images && property.images.length > 0 ? `${BASE_URL}${property.images[0]}` : 'https://via.placeholder.com/600x400?text=No+Image'} 
                           alt={property.title}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
@@ -200,7 +201,7 @@ const PropertyList = () => {
 
                {/* Left: Visual Evidence */}
                <div className="md:w-1/2 relative bg-slate-900 overflow-hidden">
-                  <img src={`http://localhost:5000${selectedProperty.images?.[0]}`} alt="Asset" className="w-full h-full object-cover opacity-80" />
+                  <img src={`${BASE_URL}${selectedProperty.images?.[0]}`} alt="Asset" className="w-full h-full object-cover opacity-80" />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
                   <div className="absolute bottom-12 left-12 right-12">
                      <span className="px-4 py-1.5 bg-primary-600 text-white rounded-full text-[10px] font-black uppercase tracking-widest mb-4 inline-block">Verified Asset</span>

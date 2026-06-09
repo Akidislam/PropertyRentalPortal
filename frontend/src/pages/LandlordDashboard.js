@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
 import UpdateProfile from '../components/UpdateProfile';
@@ -26,8 +27,8 @@ const LandlordDashboard = () => {
   const fetchStats = async () => {
     try {
       const [propsRes, rentalsRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/properties/all'),
-        axios.get(`http://localhost:5000/api/rentalrequests/landlord/${localUser.email}`)
+        axios.get(`${BASE_URL}/api/properties/all`),
+        axios.get(`${BASE_URL}/api/rentalrequests/landlord/${localUser.email}`)
       ]);
 
       const myProperties = propsRes.data.filter(p => p.uploaderEmail.toLowerCase() === localUser.email.toLowerCase());
@@ -46,7 +47,7 @@ const LandlordDashboard = () => {
 
   const fetchUpdatedUser = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/wallet/${localUser._id}`);
+      const res = await axios.get(`${BASE_URL}/api/wallet/${localUser._id}`);
       const updatedUser = { ...user, walletcoin: res.data.walletcoin };
       setUser(updatedUser);
       localStorage.setItem('user', JSON.stringify(updatedUser));
@@ -122,7 +123,7 @@ const LandlordDashboard = () => {
             <div className="bg-white p-2 pr-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4 hover:shadow-lg transition-all duration-500">
                <div className="w-12 h-12 rounded-xl overflow-hidden ring-2 ring-slate-50">
                   <img 
-                    src={user?.profilePicture ? `http://localhost:5000${user.profilePicture}` : 'https://via.placeholder.com/150?text=L'} 
+                    src={user?.profilePicture ? `${BASE_URL}${user.profilePicture}` : 'https://via.placeholder.com/150?text=L'} 
                     alt="Profile" 
                     className="w-full h-full object-cover"
                     onError={(e) => { e.target.src = 'https://via.placeholder.com/150?text=L'; }}

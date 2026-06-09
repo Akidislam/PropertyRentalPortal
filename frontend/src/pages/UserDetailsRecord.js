@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion } from 'framer-motion';
 import { FaUser, FaHistory, FaHome, FaCreditCard, FaArrowLeft, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import { useToast } from '../context/ToastContext';
@@ -18,7 +19,7 @@ const UserDetailsRecord = () => {
       try {
         const adminToken = localStorage.getItem('adminToken');
         const config = { headers: { Authorization: `Bearer ${adminToken}` } };
-        const res = await axios.get(`http://localhost:5000/api/admin/users/${id}/history`, config);
+        const res = await axios.get(`${BASE_URL}/api/admin/users/${id}/history`, config);
         setData(res.data);
       } catch (err) {
         showToast('error', 'Failed to fetch user record.');
@@ -58,7 +59,7 @@ const UserDetailsRecord = () => {
           <div className="bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100 mb-10">
             <div className="flex flex-col md:flex-row gap-10 items-center">
               <img
-                src={user.profilePicture ? `http://localhost:5000${user.profilePicture}` : 'https://ui-avatars.com/api/?name=' + user.name + '&size=200'}
+                src={user.profilePicture ? `${BASE_URL}${user.profilePicture}` : 'https://ui-avatars.com/api/?name=' + user.name + '&size=200'}
                 alt={user.name}
                 className="w-40 h-40 rounded-3xl object-cover ring-8 ring-slate-50 shadow-xl"
               />
@@ -107,7 +108,7 @@ const UserDetailsRecord = () => {
                     (user.role === 'landlord' ? properties : rentalRequests).map((item) => (
                       <div key={item._id} className="bg-white p-6 rounded-3xl border border-slate-100 flex gap-4 hover:shadow-md transition-all group">
                         <img 
-                          src={user.role === 'landlord' ? `http://localhost:5000${item.images[0]}` : `http://localhost:5000${item.propertyId?.images?.[0]}`}
+                          src={user.role === 'landlord' ? `${BASE_URL}${item.images[0]}` : `${BASE_URL}${item.propertyId?.images?.[0]}`}
                           alt="Asset"
                           className="w-20 h-20 rounded-2xl object-cover"
                         />

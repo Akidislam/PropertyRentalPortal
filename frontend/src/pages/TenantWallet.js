@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { FaWallet, FaCoins, FaPlus, FaTimes, FaHistory, FaArrowLeft } from 'react-icons/fa';
 import { useToast } from '../context/ToastContext';
 import { useNavigate, Link } from 'react-router-dom';
@@ -30,7 +31,7 @@ const TenantWallet = () => {
           return;
         }
 
-        const res = await axios.get(`http://localhost:5000/api/wallet/${localUser._id}`);
+        const res = await axios.get(`${BASE_URL}/api/wallet/${localUser._id}`);
         setUser(res.data);
       } catch (err) {
         console.error('Error fetching user data:', err);
@@ -65,7 +66,7 @@ const TenantWallet = () => {
         return;
       }
 
-      const res = await axios.post(`http://localhost:5000/api/wallet/add/${localUser._id}`, {
+      const res = await axios.post(`${BASE_URL}/api/wallet/add/${localUser._id}`, {
         amount: Number(amount),
         paymentMethod: selectedPayment
       });

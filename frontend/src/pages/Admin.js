@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
 import { FaShieldAlt, FaUserShield, FaLock, FaBuilding, FaArrowRight, FaCheckCircle } from 'react-icons/fa';
 import { motion } from 'framer-motion';
@@ -20,7 +21,7 @@ const Admin = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post('http://localhost:5000/api/admin/login', formData);
+      const res = await axios.post(`${BASE_URL}/api/admin/login`, formData);
       localStorage.setItem('admin', JSON.stringify(res.data.user));
       localStorage.setItem('adminToken', res.data.token);
       showToast('success', 'Admin login successful! Redirecting...');

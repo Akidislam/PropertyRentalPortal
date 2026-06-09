@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram, FaEye, FaLightbulb, FaUserTie, FaUserFriends, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaBullseye, FaQuoteLeft, FaRocket, FaFilter, FaWallet, FaBolt, FaStar, FaHeadset } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
@@ -14,7 +15,7 @@ const About = () => {
 
   const fetchAboutData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/about');
+      const response = await axios.get(`${BASE_URL}/api/about`);
       if (response.data && response.data.data) {
         setAboutData(response.data.data);
       }

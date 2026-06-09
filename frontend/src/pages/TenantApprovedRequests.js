@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
 import { FaCheckCircle, FaMapMarkerAlt, FaCalendarAlt, FaDownload, FaFileContract, FaCreditCard, FaHourglassHalf } from 'react-icons/fa';
@@ -25,13 +26,13 @@ const TenantApprovedRequests = () => {
 
   const fetchApprovedRequests = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/rentalrequests/tenant/${user.email}`);
+      const response = await axios.get(`${BASE_URL}/api/rentalrequests/tenant/${user.email}`);
       const approvedRequests = response.data.filter(request => request.status === 'Approved');
 
       const requestsWithAdvanceStatus = await Promise.all(
         approvedRequests.map(async (request) => {
           try {
-            const advanceResponse = await axios.get(`http://localhost:5000/api/wallet/pending/${request._id}`);
+            const advanceResponse = await axios.get(`${BASE_URL}/api/wallet/pending/${request._id}`);
             return {
               ...request,
               hasAdvanceRequest: advanceResponse.data.length > 0,
@@ -54,13 +55,13 @@ const TenantApprovedRequests = () => {
   const handlePayAdvance = async (requestId) => {
     try {
       setLoading(true);
-      const pendingPayments = await axios.get(`http://localhost:5000/api/wallet/pending/${requestId}`);
+      const pendingPayments = await axios.get(`${BASE_URL}/api/wallet/pending/${requestId}`);
       if (!pendingPayments.data || pendingPayments.data.length === 0) {
         throw new Error('No pending payment detected.');
       }
 
       const paymentId = pendingPayments.data[0]._id;
-      await axios.post(`http://localhost:5000/api/wallet/pay-advance/${paymentId}`, {
+      await axios.post(`${BASE_URL}/api/wallet/pay-advance/${paymentId}`, {
         tenantId: user._id
       });
 
@@ -118,7 +119,7 @@ const TenantApprovedRequests = () => {
                   >
                     <div className="relative h-48 overflow-hidden bg-slate-900">
                       <img 
-                        src={r.propertyId?.images?.[0] ? `http://localhost:5000${r.propertyId.images[0]}` : 'https://via.placeholder.com/600x400?text=No+Image'} 
+                        src={r.propertyId?.images?.[0] ? `${BASE_URL}${r.propertyId.images[0]}` : 'https://via.placeholder.com/600x400?text=No+Image'} 
                         alt="Asset"
                         className="w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110"
                       />

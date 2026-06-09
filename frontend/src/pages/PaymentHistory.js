@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { generatePaymentHistoryPDF } from '../utils/pdfGenerator';
 import { FaDownload, FaMoneyBillWave, FaCalendarAlt, FaMapMarkerAlt, FaHome, FaEye, FaChevronLeft, FaChevronRight, FaFileInvoiceDollar, FaTimes } from 'react-icons/fa';
@@ -26,7 +27,7 @@ const PaymentHistory = () => {
   const fetchPaymentHistory = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`http://localhost:5000/api/wallet/history/${user._id}`);
+      const res = await axios.get(`${BASE_URL}/api/wallet/history/${user._id}`);
       setPayments(res.data);
     } catch (err) {
       showToast('error', '🛑 Transaction registry synchronization failed.');

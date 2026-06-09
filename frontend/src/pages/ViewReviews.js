@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
 import { FaStar, FaMapMarkerAlt, FaCalendarAlt, FaEnvelope, FaPhone, FaQuoteLeft, FaSortAmountDown, FaComments } from 'react-icons/fa';
@@ -17,7 +18,7 @@ const ViewReviews = () => {
   const fetchReviews = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:5000/api/reviews/all?sortBy=${sortBy}`);
+      const response = await axios.get(`${BASE_URL}/api/reviews/all?sortBy=${sortBy}`);
       setReviews(response.data);
     } catch (err) {
       showToast('error', 'Failed to retrieve property testimonials');

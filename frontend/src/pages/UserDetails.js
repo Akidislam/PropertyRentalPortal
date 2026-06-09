@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion } from 'framer-motion';
 import { FaWallet, FaEnvelope, FaPhone, FaUserTie, FaUser, FaAddressCard } from 'react-icons/fa';
 import { useToast } from '../context/ToastContext';
@@ -22,7 +23,7 @@ const UserDetails = () => {
       try {
         setLoading(true);
         const config = { headers: { Authorization: `Bearer ${adminToken}` } };
-        const res = await axios.get('http://localhost:5000/api/admin/users', config);
+        const res = await axios.get(`${BASE_URL}/api/admin/users`, config);
         const allUsers = res.data;
         
         setTenants(allUsers.filter(u => u.role === 'tenant'));
@@ -77,7 +78,7 @@ const UserDetails = () => {
                     <td className="px-6 py-5 whitespace-nowrap">
                       <div className="flex items-center gap-4">
                         <img
-                          src={u.profilePicture ? `http://localhost:5000${u.profilePicture}` : 'https://ui-avatars.com/api/?name=' + u.name + '&background=f8fafc&color=cbd5e1'}
+                          src={u.profilePicture ? `${BASE_URL}${u.profilePicture}` : 'https://ui-avatars.com/api/?name=' + u.name + '&background=f8fafc&color=cbd5e1'}
                           alt={u.name}
                           className="w-12 h-12 rounded-xl object-cover ring-4 ring-slate-50 group-hover:ring-white transition-all shadow-sm"
                           onError={e => { e.target.onerror = null; e.target.src = 'https://ui-avatars.com/api/?name=' + u.name + '&background=f8fafc&color=cbd5e1'; }}

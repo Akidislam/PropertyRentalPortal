@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import '../styles/updateprofile.css';
 import { FaTimes, FaUser, FaPhone, FaLock, FaCamera, FaEnvelope } from 'react-icons/fa';
 
@@ -27,7 +28,7 @@ const UpdateProfile = ({ onClose, onUpdate }) => {
         throw new Error('No authentication token found');
       }
 
-      const response = await axios.get('http://localhost:5000/api/auth/profile', {
+      const response = await axios.get(`${BASE_URL}/api/auth/profile`, {
         headers: {
           'x-auth-token': token
         }
@@ -41,7 +42,7 @@ const UpdateProfile = ({ onClose, onUpdate }) => {
           phoneNumber: response.data.phoneNumber || ''
         }));
         if (response.data.profilePicture) {
-          setPreviewUrl(`http://localhost:5000${response.data.profilePicture}`);
+          setPreviewUrl(`${BASE_URL}${response.data.profilePicture}`);
         }
       }
     } catch (error) {
@@ -92,7 +93,7 @@ const UpdateProfile = ({ onClose, onUpdate }) => {
       if (formData.password) formDataToSend.append('password', formData.password);
       if (profilePicture) formDataToSend.append('profilePicture', profilePicture);
 
-      const response = await axios.put('http://localhost:5000/api/auth/profile', formDataToSend, {
+      const response = await axios.put(`${BASE_URL}/api/auth/profile`, formDataToSend, {
         headers: {
           'x-auth-token': token,
           'Content-Type': 'multipart/form-data'

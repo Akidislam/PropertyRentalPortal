@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
 import DashboardSidebar from '../components/DashboardSidebar';
@@ -64,7 +65,7 @@ const AddProperty = () => {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/properties/add', form, {
+      await axios.post(`${BASE_URL}/api/properties/add`, form, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       showToast('success', '✨ Asset successfully registered in our premium network.');

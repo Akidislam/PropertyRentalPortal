@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaUser, FaEnvelope, FaLock, FaCalendarAlt, FaIdCard, FaPhone, FaUserShield, FaArrowRight, FaCheckCircle, FaBuilding } from 'react-icons/fa';
 import { useToast } from '../context/ToastContext';
@@ -50,7 +51,7 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/auth/register', formData);
+      await axios.post(`${BASE_URL}/api/auth/register`, formData);
       setShowOtpField(true);
       showToast('success', 'OTP has been sent to your email!');
     } catch (err) {
@@ -64,7 +65,7 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/auth/verify-otp', {
+      await axios.post(`${BASE_URL}/api/auth/verify-otp`, {
         email: formData.email,
         otp,
       });

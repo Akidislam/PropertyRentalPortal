@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion } from 'framer-motion';
 import { isAdminAuthenticated } from '../utils/adminAuth';
 import { useToast } from '../context/ToastContext';
@@ -32,10 +33,10 @@ const AdminDashboard = () => {
         const adminToken = localStorage.getItem('adminToken');
         const config = { headers: { Authorization: `Bearer ${adminToken}` } };
         const [usersRes, propsRes, rentalsRes, reviewsRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/admin/users', config),
-          axios.get('http://localhost:5000/api/properties/all', config),
-          axios.get('http://localhost:5000/api/admin/rentals', config),
-          axios.get('http://localhost:5000/api/reviews/all', config)
+          axios.get(`${BASE_URL}/api/admin/users`, config),
+          axios.get(`${BASE_URL}/api/properties/all`, config),
+          axios.get(`${BASE_URL}/api/admin/rentals`, config),
+          axios.get(`${BASE_URL}/api/reviews/all`, config)
         ]);
 
         setStats({

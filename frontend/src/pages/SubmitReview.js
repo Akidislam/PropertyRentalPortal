@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
@@ -58,7 +59,7 @@ const SubmitReview = () => {
 
     setIsSubmitting(true);
     try {
-      await axios.post('http://localhost:5000/api/reviews/submit', formData);
+      await axios.post(`${BASE_URL}/api/reviews/submit`, formData);
       showToast('success', '✨ Narrative recorded. Thank you for contributing to our community intelligence.');
       setTimeout(() => navigate('/view-reviews'), 2000);
     } catch (error) {

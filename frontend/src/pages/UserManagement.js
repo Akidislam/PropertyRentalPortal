@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../context/ToastContext';
@@ -26,7 +27,7 @@ const UserManagement = () => {
 
   const fetchUsers = () => {
     setLoading(true);
-    axios.get('http://localhost:5000/api/admin/users', getConfig())
+    axios.get(`${BASE_URL}/api/admin/users`, getConfig())
       .then((res) => { setUsers(res.data); setLoading(false); })
       .catch(() => { showToast('error', 'Failed to fetch users.'); setLoading(false); });
   };
@@ -42,7 +43,7 @@ const UserManagement = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const url = editingUserId ? `http://localhost:5000/api/admin/users/${editingUserId}` : 'http://localhost:5000/api/admin/users';
+    const url = editingUserId ? `${BASE_URL}/api/admin/users/${editingUserId}` : `${BASE_URL}/api/admin/users`;
     const method = editingUserId ? axios.put : axios.post;
 
     method(url, form, getConfig())
@@ -67,7 +68,7 @@ const UserManagement = () => {
 
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
-      axios.delete(`http://localhost:5000/api/admin/users/${id}`, getConfig())
+      axios.delete(`${BASE_URL}/api/admin/users/${id}`, getConfig())
         .then(() => { showToast('success', 'User deleted successfully.'); fetchUsers(); })
         .catch(() => { showToast('error', 'Deletion failed.'); });
     }

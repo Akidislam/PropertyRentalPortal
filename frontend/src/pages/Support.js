@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { FaHeadset, FaEnvelope, FaPhone, FaUser, FaComment, FaPaperPlane, FaMapMarkerAlt, FaClock, FaCheckCircle, FaInfoCircle } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
@@ -29,7 +30,7 @@ const Support = () => {
     setIsSubmitting(true);
 
     try {
-      const res = await axios.post('http://localhost:5000/api/support/submit', formData);
+      const res = await axios.post(`${BASE_URL}/api/support/submit`, formData);
       if (res.data.success) {
         showToast('success', '✨ Transmission successful! Our elite support squad is on the case.');
         setFormData({

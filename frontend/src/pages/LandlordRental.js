@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
 import DashboardSidebar from '../components/DashboardSidebar';
@@ -36,7 +37,7 @@ const LandlordRental = () => {
   const fetchRentalRequests = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`http://localhost:5000/api/rentalrequests/landlord/${landlordEmail}`);
+      const res = await axios.get(`${BASE_URL}/api/rentalrequests/landlord/${landlordEmail}`);
       setRequests(res.data);
     } catch (err) {
       showToast('error', '🛑 Intelligence retrieval failed. Registry unavailable.');
@@ -52,7 +53,7 @@ const LandlordRental = () => {
 
   const handleApproval = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/rentalrequests/approve/${id}`);
+      await axios.put(`${BASE_URL}/api/rentalrequests/approve/${id}`);
       showToast('success', '✨ Residency authorized and advance payment initiated.');
       setRequests(prev => prev.map(r => r._id === id ? { ...r, status: 'Approved', hasAdvanceRequest: true } : r));
     } catch { showToast('error', '🛑 Verification sequence failed.'); }
@@ -60,7 +61,7 @@ const LandlordRental = () => {
 
   const handleRejection = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/rentalrequests/reject/${id}`);
+      await axios.put(`${BASE_URL}/api/rentalrequests/reject/${id}`);
       showToast('success', '✨ Residency invalidated. Identity purged.');
       setRequests(prev => prev.map(r => r._id === id ? { ...r, status: 'Rejected' } : r));
     } catch { showToast('error', '🛑 Invalidation aborted.'); }
@@ -71,7 +72,7 @@ const LandlordRental = () => {
       const request = requests.find(r => r._id === requestId);
       if (!request?.propertyId?.advance) return;
 
-      const res = await axios.post(`http://localhost:5000/api/wallet/request-advance/${requestId}`, {
+      const res = await axios.post(`${BASE_URL}/api/wallet/request-advance/${requestId}`, {
         amount: request.propertyId.advance
       });
       showToast('success', '✨ Liquidity request deployed. Awaiting verification.');
@@ -125,7 +126,7 @@ const LandlordRental = () => {
                       {/* Asset Header */}
                       <div className="relative h-48 overflow-hidden bg-slate-900">
                         <img 
-                          src={r.propertyId?.images?.[0] ? `http://localhost:5000${r.propertyId.images[0]}` : 'https://via.placeholder.com/600x400?text=No+Image'} 
+                          src={r.propertyId?.images?.[0] ? `${BASE_URL}${r.propertyId.images[0]}` : 'https://via.placeholder.com/600x400?text=No+Image'} 
                           alt="Asset"
                           className="w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110"
                         />

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +17,7 @@ const AdminApproval = () => {
     try {
       setLoading(true);
       const adminToken = localStorage.getItem('adminToken');
-      const res = await axios.get('http://localhost:5000/api/admin/properties', {
+      const res = await axios.get(`${BASE_URL}/api/admin/properties`, {
         headers: { Authorization: `Bearer ${adminToken}` }
       });
       setProperties(Array.isArray(res.data) ? res.data : []);
@@ -35,7 +36,7 @@ const AdminApproval = () => {
   const handleAction = async (id, status) => {
     try {
       const adminToken = localStorage.getItem('adminToken');
-      const res = await axios.post(`http://localhost:5000/api/admin/approve/${id}`, { status }, {
+      const res = await axios.post(`${BASE_URL}/api/admin/approve/${id}`, { status }, {
         headers: { Authorization: `Bearer ${adminToken}` }
       });
       setProperties(prev =>
@@ -61,7 +62,7 @@ const AdminApproval = () => {
     if (!imageUrl) return 'https://via.placeholder.com/120x80?text=No+Image';
     return imageUrl.startsWith('http')
       ? imageUrl
-      : `http://localhost:5000${imageUrl.startsWith('/') ? '' : '/uploads/'}${imageUrl}`;
+      : `${BASE_URL}${imageUrl.startsWith('/') ? '' : '/uploads/'}${imageUrl}`;
   };
 
   return (

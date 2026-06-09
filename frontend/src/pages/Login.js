@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
 import { FaSignInAlt, FaEnvelope, FaLock, FaUserShield, FaBuilding, FaArrowRight, FaCheckCircle, FaShieldAlt } from 'react-icons/fa';
 import { motion } from 'framer-motion';
@@ -26,7 +27,7 @@ const Login = () => {
     
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', {
+      const res = await axios.post(`${BASE_URL}/api/auth/login`, {
         email: formData.email,
         password: formData.password,
         role: formData.role

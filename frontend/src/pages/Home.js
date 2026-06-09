@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion } from 'framer-motion';
 import { FaUserPlus, FaSearch, FaShieldAlt, FaChartLine, FaBuilding, FaChevronDown, FaMapMarkerAlt, FaHome, FaStar, FaSignInAlt } from 'react-icons/fa';
 import rental1 from '../assets/p1.jpg';
@@ -15,7 +16,7 @@ const Home = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/properties/all');
+        const res = await axios.get(`${BASE_URL}/api/properties/all`);
         setTotalProps(res.data.length);
       } catch (error) {
         console.error('Error fetching home stats:', error);

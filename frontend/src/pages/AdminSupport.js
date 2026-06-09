@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaCheck, FaEnvelope, FaPhone, FaUser, FaComment, FaReply, FaTimes, FaHeadset, FaSearch, FaFilter, FaCalendarAlt, FaCheckCircle, FaRocket } from 'react-icons/fa';
 import { useToast } from '../context/ToastContext';
@@ -20,7 +21,7 @@ const AdminSupport = () => {
 
   const fetchTickets = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/support/tickets', {
+      const res = await axios.get(`${BASE_URL}/api/support/tickets`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` }
       });
       setTickets(res.data.data);
@@ -31,7 +32,7 @@ const AdminSupport = () => {
   const handleSubmitSolution = async (ticketId) => {
     if (!solution.trim()) { showToast('error', '🛑 Resolution narrative required.'); return; }
     try {
-      const res = await axios.put(`http://localhost:5000/api/support/tickets/${ticketId}`, 
+      const res = await axios.put(`${BASE_URL}/api/support/tickets/${ticketId}`, 
         { solution: solution.trim() },
         { headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` } }
       );

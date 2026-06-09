@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaMoneyBillWave, FaCreditCard, FaHistory, FaFilter, FaWallet, FaArrowUp, FaArrowDown, FaExchangeAlt, FaHourglassHalf } from 'react-icons/fa';
 import { BsCash, BsBank } from 'react-icons/bs';
@@ -28,7 +29,7 @@ const WalletHistory = () => {
     try {
       const userType = user.role === 'landlord' ? 'landlord' : 'tenant';
       const res = await axios.get(
-        `http://localhost:5000/api/wallet-history/${user._id}/${userType}`,
+        `${BASE_URL}/api/wallet-history/${user._id}/${userType}`,
         { headers: { 'x-auth-token': localStorage.getItem('token') } }
       );
 

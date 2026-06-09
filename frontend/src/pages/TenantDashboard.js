@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
 import UpdateProfile from '../components/UpdateProfile';
@@ -25,7 +26,7 @@ const TenantDashboard = () => {
 
   const fetchStats = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/rentalrequests/tenant/${localUser.email}`);
+      const res = await axios.get(`${BASE_URL}/api/rentalrequests/tenant/${localUser.email}`);
       const activeStays = res.data.filter(r => r.status === 'Approved');
       const pendingApps = res.data.filter(r => r.status === 'Pending');
       const investment = activeStays.reduce((acc, curr) => acc + (Number(curr.propertyPrice) || 0), 0);
@@ -42,7 +43,7 @@ const TenantDashboard = () => {
 
   const fetchUpdatedUser = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/wallet/${localUser._id}`);
+      const res = await axios.get(`${BASE_URL}/api/wallet/${localUser._id}`);
       const updatedUser = { ...user, walletcoin: res.data.walletcoin };
       setUser(updatedUser);
       localStorage.setItem('user', JSON.stringify(updatedUser));
@@ -118,7 +119,7 @@ const TenantDashboard = () => {
             <div className="bg-white p-2 pr-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4 hover:shadow-lg transition-all duration-500">
                <div className="w-12 h-12 rounded-xl overflow-hidden ring-2 ring-slate-50">
                   <img 
-                    src={user?.profilePicture ? `http://localhost:5000${user.profilePicture}` : 'https://ui-avatars.com/api/?name=' + user?.name + '&background=0ea5e9&color=fff'} 
+                    src={user?.profilePicture ? `${BASE_URL}${user.profilePicture}` : 'https://ui-avatars.com/api/?name=' + user?.name + '&background=0ea5e9&color=fff'} 
                     alt="Profile" 
                     className="w-full h-full object-cover"
                     onError={(e) => { e.target.src = 'https://ui-avatars.com/api/?name=' + user?.name + '&background=0ea5e9&color=fff'; }}

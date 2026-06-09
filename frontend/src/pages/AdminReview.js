@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion } from 'framer-motion';
 import { FaTrash, FaSearch, FaSort, FaStar, FaBuilding, FaQuoteLeft, FaComments } from 'react-icons/fa';
 import { useToast } from '../context/ToastContext';
@@ -20,7 +21,7 @@ const AdminReview = () => {
     try {
       setLoading(true);
       const adminToken = localStorage.getItem('adminToken');
-      const res = await axios.get(`http://localhost:5000/api/reviews/admin/all?sortBy=${sortBy}&search=${searchTerm}`, {
+      const res = await axios.get(`${BASE_URL}/api/reviews/admin/all?sortBy=${sortBy}&search=${searchTerm}`, {
         headers: { Authorization: `Bearer ${adminToken}` }
       });
       setReviews(res.data);
@@ -32,7 +33,7 @@ const AdminReview = () => {
     if (!window.confirm('Execute narrative deletion?')) return;
     try {
       const adminToken = localStorage.getItem('adminToken');
-      await axios.delete(`http://localhost:5000/api/reviews/admin/${reviewId}`, {
+      await axios.delete(`${BASE_URL}/api/reviews/admin/${reviewId}`, {
         headers: { Authorization: `Bearer ${adminToken}` }
       });
       showToast('success', '✨ Narrative purged from the intelligence core.');

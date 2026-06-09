@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { FaBed, FaBath, FaRulerCombined, FaMapMarkerAlt, FaMoneyBillWave, FaUser, FaEnvelope, FaPhone, FaSearch, FaLock } from 'react-icons/fa';
 import '../styles/tenantrental.css';
 import { useToast } from '../context/ToastContext';
@@ -23,7 +24,7 @@ const TenantRental = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/properties/approved');
+        const response = await axios.get(`${BASE_URL}/api/properties/approved`);
         setProperties(response.data);
         setFilteredProperties(response.data);
         setLoading(false);
@@ -93,7 +94,7 @@ const TenantRental = () => {
         tenantPhone: formData.phone
       };
 
-      await axios.post('http://localhost:5000/api/rentalrequests/create', requestData);
+      await axios.post(`${BASE_URL}/api/rentalrequests/create`, requestData);
       
       showToast('success', 'Rental request submitted successfully!');
       setShowModal(false);
@@ -146,7 +147,7 @@ const TenantRental = () => {
             <div className="property-image">
               {property.images && property.images.length > 0 ? (
                 <img 
-                  src={`http://localhost:5000${property.images[0]}`} 
+                  src={`${BASE_URL}${property.images[0]}`} 
                   alt={property.title}
                   onError={(e) => {
                     e.target.onerror = null;

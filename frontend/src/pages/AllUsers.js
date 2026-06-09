@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaUsers, FaEnvelope, FaPhone, FaCalendarAlt, FaUserCircle, FaSearch, FaFilter } from 'react-icons/fa';
 import { useToast } from '../context/ToastContext';
@@ -15,7 +16,7 @@ const AllUsers = () => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const res = await axios.get('http://localhost:5000/api/users/all');
+        const res = await axios.get(`${BASE_URL}/api/users/all`);
         if (res.data) setUsers(res.data);
       } catch { showToast('error', '🛑 Network error while accessing directory.'); }
       finally { setLoading(false); }
@@ -98,7 +99,7 @@ const AllUsers = () => {
                       <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                       <div className="relative inline-block mb-8">
                         <img
-                          src={u.profilePicture ? `http://localhost:5000${u.profilePicture}` : 'https://ui-avatars.com/api/?name=' + u.name + '&background=f8fafc&color=cbd5e1'}
+                          src={u.profilePicture ? `${BASE_URL}${u.profilePicture}` : 'https://ui-avatars.com/api/?name=' + u.name + '&background=f8fafc&color=cbd5e1'}
                           alt={u.name}
                           className="w-24 h-24 rounded-[2rem] object-cover ring-8 ring-slate-50 group-hover:ring-primary-50 transition-all shadow-md"
                           onError={e => { e.target.onerror = null; e.target.src = 'https://ui-avatars.com/api/?name=' + u.name + '&background=f8fafc&color=cbd5e1'; }}

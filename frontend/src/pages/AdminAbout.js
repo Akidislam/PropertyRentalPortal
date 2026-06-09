@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/api';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram, FaPlus, FaTimes, FaInfoCircle, FaBullseye, FaLightbulb, FaRocket, FaUsers, FaEnvelope } from 'react-icons/fa';
@@ -45,7 +46,7 @@ const AdminAbout = () => {
     try {
       setLoading(true);
       const adminToken = localStorage.getItem('adminToken');
-      const response = await axios.get('http://localhost:5000/api/about', {
+      const response = await axios.get(`${BASE_URL}/api/about`, {
         headers: { Authorization: `Bearer ${adminToken}` }
       });
       if (response?.data?.data) {
@@ -116,7 +117,7 @@ const AdminAbout = () => {
     try {
       setLoading(true);
       const adminToken = localStorage.getItem('adminToken');
-      const response = await axios.post('http://localhost:5000/api/about', formData, {
+      const response = await axios.post(`${BASE_URL}/api/about`, formData, {
         headers: { Authorization: `Bearer ${adminToken}` }
       });
       if (response.data.success) {
