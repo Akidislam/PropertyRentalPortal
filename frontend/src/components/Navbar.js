@@ -8,6 +8,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   const user = JSON.parse(localStorage.getItem('user'));
   const admin = JSON.parse(localStorage.getItem('admin'));
