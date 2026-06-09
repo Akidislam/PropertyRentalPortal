@@ -177,32 +177,35 @@ const Login = () => {
             </div>
 
             {/* Slider Security Check */}
-            <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
-              <div className="relative h-14 bg-white border-2 border-slate-100 rounded-xl flex items-center justify-center overflow-hidden">
-                <span className={`text-sm font-bold uppercase tracking-widest ${isVerified ? 'text-green-500' : 'text-slate-400'}`}>
-                  {isVerified ? 'Verified' : 'Slide to Verify'}
+            <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+              <div className="relative h-16 bg-white border border-slate-200 rounded-xl flex items-center justify-center overflow-hidden">
+                <span className={`text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 ${isVerified ? 'text-emerald-500' : 'text-slate-300'}`}>
+                  {isVerified ? 'Trust Verified' : 'Slide to Authenticate'}
                 </span>
 
                 <motion.div
                   drag="x"
-                  dragConstraints={{ left: 0, right: 260 }} // Approximate width of container minus slider
+                  dragConstraints={{ left: 0, right: 300 }}
                   dragElastic={0}
                   dragMomentum={false}
                   onDragEnd={(e, info) => {
-                    if (info.offset.x > 200) {
+                    if (info.offset.x > 240) {
                       setIsVerified(true);
+                      showToast('success', 'Identity Verified');
                     }
                   }}
-                  className={`absolute left-1 w-12 h-12 rounded-lg flex items-center justify-center cursor-grab active:cursor-grabbing shadow-md ${isVerified ? 'bg-green-500 text-white' : 'bg-primary-600 text-white'}`}
+                  className={`absolute left-1.5 w-13 h-13 rounded-lg flex items-center justify-center cursor-grab active:cursor-grabbing shadow-xl transition-colors duration-500 ${isVerified ? 'bg-emerald-500 text-white' : 'bg-slate-900 text-white'}`}
                 >
-                  {isVerified ? <FaCheckCircle /> : <FaArrowRight />}
+                  <div className="flex items-center justify-center w-10 h-10">
+                    {isVerified ? <FaCheckCircle size={20} /> : <FaArrowRight size={20} />}
+                  </div>
                 </motion.div>
 
                 {isVerified && (
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: '100%' }}
-                    className="absolute left-0 top-0 h-full bg-green-500/10 pointer-events-none"
+                    className="absolute left-0 top-0 h-full bg-emerald-500/5 pointer-events-none"
                   />
                 )}
               </div>
@@ -211,20 +214,21 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading || !isVerified}
-              className={`w-full py-4 font-black text-sm uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-xl active:scale-95 mt-8 ${isVerified
-                ? 'bg-slate-900 hover:bg-slate-800 text-white shadow-slate-900/20'
-                : 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-none'
+              className={`w-full py-5 font-black text-[11px] uppercase tracking-[0.25em] rounded-xl transition-all duration-500 flex items-center justify-center gap-4 shadow-2xl active:scale-95 mt-8 ${isVerified
+                  ? 'bg-primary-600 hover:bg-primary-700 text-white shadow-primary-600/20'
+                  : 'bg-slate-100 text-slate-300 cursor-not-allowed shadow-none'
                 }`}
             >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
               ) : (
                 <>
-                  <span>Sign In</span>
-                  <FaSignInAlt className="text-sm" />
+                  <span>Initialize Session</span>
+                  <FaSignInAlt className={`${isVerified ? 'animate-pulse' : ''}`} />
                 </>
               )}
             </button>
+
           </form>
 
           <div className="mt-8 text-center lg:text-left">

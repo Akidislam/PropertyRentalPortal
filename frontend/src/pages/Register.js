@@ -141,8 +141,8 @@ const Register = () => {
                         type="button"
                         onClick={() => setFormData({ ...formData, role })}
                         className={`flex-1 py-3 rounded-xl text-sm font-black capitalize transition-all duration-300 border-2 ${formData.role === role
-                            ? 'bg-primary-600 border-primary-600 text-white shadow-lg shadow-primary-600/30'
-                            : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-500'
+                          ? 'bg-primary-600 border-primary-600 text-white shadow-lg shadow-primary-600/30'
+                          : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-500'
                           }`}
                       >
                         <div className="flex items-center justify-center gap-2">
@@ -278,17 +278,18 @@ const Register = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-4 mt-6 bg-slate-900 hover:bg-slate-800 text-white font-black text-sm uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-slate-900/20 active:scale-95"
+                  className="w-full py-5 mt-8 bg-primary-600 hover:bg-primary-700 text-white font-black text-[11px] uppercase tracking-[0.25em] rounded-xl transition-all duration-500 flex items-center justify-center gap-4 shadow-2xl shadow-primary-600/20 active:scale-95"
                 >
                   {loading ? (
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                   ) : (
                     <>
-                      <span>Register Account</span>
-                      <FaArrowRight className="text-sm" />
+                      <span>Construct Account</span>
+                      <FaArrowRight className="text-sm animate-pulse" />
                     </>
                   )}
                 </button>
+
               </motion.form>
             ) : (
               <motion.form
