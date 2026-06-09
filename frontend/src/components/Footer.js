@@ -116,13 +116,13 @@ const Footer = () => {
                         <div className="text-right">
                             <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Architected By</p>
                             <p className="text-sm font-black text-white uppercase tracking-tighter italic">
-                                Lord <span className="text-primary-500">Voldamort</span>
+                                Lord <span className="text-primary-500">Voldemort</span>
                             </p>
                         </div>
                         <div className="w-12 h-12 rounded-full border-2 border-primary-600/30 p-1">
                             <img
-                                src="https://ui-avatars.com/api/?name=Voldamort&background=0284c7&color=fff"
-                                alt="Lord Voldamort"
+                                src="https://ui-avatars.com/api/?name=Voldemort&background=0284c7&color=fff"
+                                alt="Lord Voldemort"
                                 className="w-full h-full rounded-full object-cover"
                             />
                         </div>
