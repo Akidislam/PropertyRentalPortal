@@ -4,7 +4,6 @@ import { FaHome, FaInfoCircle, FaHeadset, FaComments, FaBars, FaTimes, FaRocket,
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
-  const [dateTime, setDateTime] = useState(new Date());
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
@@ -14,14 +13,14 @@ const Navbar = () => {
   const admin = JSON.parse(localStorage.getItem('admin'));
 
   useEffect(() => {
-    const timer = setInterval(() => setDateTime(new Date()), 1000);
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => {
-      clearInterval(timer);
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleLogout = () => {
     localStorage.clear();

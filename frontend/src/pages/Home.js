@@ -4,9 +4,8 @@ import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import {
-  FaUserPlus, FaSearch, FaShieldAlt, FaChartLine, FaStar,
-  FaSignInAlt, FaBuilding, FaMapMarkerAlt, FaCheckShadow,
-  FaRocket, FaQuoteLeft, FaGlobe, FaArrowRight, FaHome
+  FaSearch, FaShieldAlt, FaChartLine,
+  FaQuoteLeft, FaArrowRight, FaHome
 } from 'react-icons/fa';
 import heroImg from '../assets/hero_modern.png';
 
