@@ -1,0 +1,159 @@
+.toast-container {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+}
+
+.toast {
+  position: relative;
+  min-width: 300px;
+  padding: 16px;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  animation: slide-in 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toast-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.toast-message {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toast-close:hover {
+  color: #1a1a1a;
+}
+
+.toast-close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.1);
+  animation: progress 3s linear forwards;
+}
+
+/* Toast Types */
+.toast-success {
+  border-left: 4px solid #4BB543;
+}
+
+.toast-success .toast-icon {
+  color: #4BB543;
+}
+
+.toast-error {
+  border-left: 4px solid #FF3333;
+}
+
+.toast-error .toast-icon {
+  color: #FF3333;
+}
+
+.toast-warning {
+  border-left: 4px solid #FFB800;
+}
+
+.toast-warning .toast-icon {
+  color: #FFB800;
+}
+
+.toast-info {
+  border-left: 4px solid #2196F3;
+}
+
+.toast-info .toast-icon {
+  color: #2196F3;
+}
+
+/* Animations */
+@keyframes slide-in {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}
+
+@keyframes progress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+/* Hover effect */
+.toast:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .toast-container {
+    top: 70px;
+    left: 20px;
+    right: 20px;
+    max-width: none;
+  }
+  
+  .toast {
+    min-width: 0;
+    width: 100%;
+  }
+} 

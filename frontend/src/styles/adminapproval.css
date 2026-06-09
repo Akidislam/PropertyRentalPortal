@@ -1,0 +1,200 @@
+/* Background Gradient */
+.admin-approval-container {
+  padding: 40px;
+  background: linear-gradient(to right, #f5f7fa, #e8f5e9);
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Title Styling */
+.admin-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #2e7d32;
+  margin-bottom: 30px;
+}
+
+/* Status Banner */
+.status-banner {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 15px 25px;
+  border-radius: 10px;
+  font-weight: 600;
+  animation: fade-in 0.6s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.status-banner.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status-banner.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Property Table Wrapper */
+.admin-table-wrapper {
+  overflow-x: auto;
+  padding: 20px;
+}
+
+/* Table Design with Column Spacing */
+.admin-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 15px 10px; /* Adds space between columns */
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Table Headers */
+.admin-table th,
+.admin-table td {
+  padding: 16px 20px;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 2px solid #f1f1f1;
+}
+
+/* Table Header */
+.admin-table th {
+  background-color: #2e7d32;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  letter-spacing: 0.8px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* Table Row Styling */
+.admin-table tr {
+  background-color: #ffffff;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.admin-table tr:hover {
+  background-color: #f4f8f4;
+  transform: scale(1.02);
+}
+
+/* Property Image Styling */
+.property-image {
+  width: 100px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.property-image:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 0.35rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: inline-block;
+  text-transform: capitalize;
+  min-width: 70px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.status-badge.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.approved {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-badge.rejected {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-badge.done {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+/* Action Buttons */
+.action-btns {
+  display: flex;
+  gap: 0.35rem;
+  justify-content: center;
+}
+
+.approve-btn,
+.decline-btn {
+  padding: 0.35rem 0.75rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.8rem;
+}
+
+.approve-btn {
+  background: #28a745;
+  color: white;
+}
+
+.approve-btn:hover {
+  background: #218838;
+  transform: translateY(-2px);
+}
+
+.decline-btn {
+  background: #dc3545;
+  color: white;
+}
+
+.decline-btn:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+}
+
+/* Table Cell Alignment */
+.admin-table td {
+  vertical-align: middle;
+  padding: 0.75rem;
+}
+
+/* Status and Action Column Width */
+.admin-table th:nth-child(5),
+.admin-table td:nth-child(5),
+.admin-table th:nth-child(9),
+.admin-table td:nth-child(9) {
+  width: 100px;
+  text-align: center;
+}
+
+/* Fade-in Animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

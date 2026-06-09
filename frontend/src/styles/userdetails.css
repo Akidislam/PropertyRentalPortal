@@ -1,0 +1,84 @@
+.userdetails-container {
+  background: linear-gradient(to right, #f5f7fa, #e8f5e9);
+  min-height: 100vh;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.userdetails-title {
+  text-align: center;
+  font-size: 30px;
+  color: #2e7d32;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+
+.userdetails-role-title {
+  font-size: 22px;
+  color: #1b5e20;
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: bold;
+  background-color: #ffffff;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+.userdetails-table-container {
+  overflow-x: auto;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.userdetails-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.userdetails-table th {
+  background-color: #2e7d32;
+  color: white;
+  font-weight: bold;
+  padding: 14px;
+  text-align: left;
+  font-size: 15px;
+}
+
+.userdetails-table td {
+  padding: 14px;
+  color: #333;
+  font-size: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.userdetails-table tr:hover {
+  background-color: #f1f8e9;
+}
+
+.userdetails-table th:first-child,
+.userdetails-table td:first-child {
+  border-left: none;
+}
+
+.userdetails-table th:last-child,
+.userdetails-table td:last-child {
+  border-right: none;
+}
+
+/* Responsive tweak */
+@media (max-width: 768px) {
+  .userdetails-title {
+    font-size: 24px;
+  }
+
+  .userdetails-table th,
+  .userdetails-table td {
+    font-size: 13px;
+    padding: 10px;
+  }
+}

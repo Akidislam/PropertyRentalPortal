@@ -1,0 +1,180 @@
+.wallet-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.wallet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #3498db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.user-details h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+.user-details p {
+  margin: 0.2rem 0;
+  color: #4a5568;
+  font-size: 0.9rem;
+}
+
+.balance-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.balance-amount {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0.5rem 0;
+}
+
+.balance-label {
+  color: #4a5568;
+  font-size: 0.9rem;
+}
+
+.add-coin-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 180px;
+  padding: 0.75rem 1.5rem;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0 auto;
+}
+
+.add-coin-btn:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+}
+
+.add-coin-btn i {
+  font-size: 1.2rem;
+}
+
+.transaction-history {
+  margin-top: 2rem;
+}
+
+.transaction-history h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.transaction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+.transaction-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.transaction-title {
+  color: #2c3e50;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.transaction-date {
+  color: #718096;
+  font-size: 0.8rem;
+}
+
+.transaction-amount {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.transaction-amount.credit {
+  color: #38a169;
+}
+
+.transaction-amount.debit {
+  color: #e53e3e;
+}
+
+.no-transactions {
+  text-align: center;
+  color: #718096;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px dashed #e2e8f0;
+}
+
+@media (max-width: 768px) {
+  .wallet-container {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .wallet-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .user-info {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .add-coin-btn {
+    width: 100%;
+    max-width: 180px;
+  }
+} 

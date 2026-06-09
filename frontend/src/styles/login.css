@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Main Container */
+.login-background {
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.6);
+  background-blend-mode: overlay;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Form Wrapper */
+.login-form-wrapper {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  width: 90%;
+  max-width: 800px;
+  animation: fadeIn 1s ease-in-out;
+  backdrop-filter: blur(6px);
+}
+
+/* Form Box */
+.login-form-box-wide {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Title */
+.login-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #0c8cac;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.login-title span {
+  color: #055f6d;
+}
+
+/* Form Row */
+.login-form-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Input Fields */
+.login-input {
+  flex: 1;
+  padding: 10px 15px;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: 0.3s ease;
+  background-color: #fff;
+  min-width: 0;
+}
+
+.login-input:focus {
+  border-color: #0c8cac;
+  box-shadow: 0 0 8px rgba(12, 140, 172, 0.2);
+  outline: none;
+}
+
+/* Select Dropdown */
+.login-select {
+  width: 120px;
+  padding: 10px;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  transition: 0.3s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23055f6d' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+  background-size: 8px;
+}
+
+.login-select:focus {
+  border-color: #0c8cac;
+  box-shadow: 0 0 8px rgba(12, 140, 172, 0.2);
+  outline: none;
+}
+
+/* Submit Button */
+.login-submit-btn {
+  width: 45px;
+  height: 45px;
+  padding: 0;
+  font-size: 1.1rem;
+  background: linear-gradient(to right, #0c8cac, #055f6d);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-submit-btn:hover {
+  background: linear-gradient(to right, #055f6d, #0c8cac);
+  transform: translateY(-2px);
+}
+
+.login-submit-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Message Styling */
+.login-message-container {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+}
+
+.login-message-content {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.login-message-icon {
+  font-size: 1.1rem;
+}
+
+.login-message-text {
+  flex: 1;
+}
+
+.login-message-success {
+  background: linear-gradient(135deg, #e6fff1 0%, #d1ffe3 100%);
+  color: #0d5a2c;
+  border: 1px solid #a0e0b5;
+}
+
+.login-message-error {
+  background: linear-gradient(135deg, #ffe6e6 0%, #ffd1d1 100%);
+  color: #8b1a1a;
+  border: 1px solid #ffb0b0;
+}
+
+/* Animations */
+.shake-animation {
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.bounce-animation {
+  animation: bounce 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Hover effects */
+.login-message-content:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.login-message-success:hover {
+  background: linear-gradient(135deg, #d1ffe3 0%, #c0ffd6 100%);
+}
+
+.login-message-error:hover {
+  background: linear-gradient(135deg, #ffd1d1 0%, #ffc0c0 100%);
+}
+
+/* CAPTCHA Styles */
+.captcha-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.captcha-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.refresh-captcha {
+  background: none;
+  border: none;
+  color: #0c8cac;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.refresh-captcha:hover {
+  background: rgba(12, 140, 172, 0.1);
+  transform: rotate(180deg);
+}
+
+.refresh-captcha:active {
+  transform: scale(0.95);
+}
+
+/* Register Link */
+.register-link-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.register-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(to right, #055f6d, #0c8cac);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.register-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(12, 140, 172, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .login-form-wrapper {
+    padding: 20px;
+    width: 95%;
+  }
+
+  .login-form-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .login-select {
+    width: 100%;
+  }
+
+  .login-submit-btn {
+    width: 100%;
+    height: 45px;
+  }
+
+  .login-title {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-form-wrapper {
+    padding: 15px;
+  }
+
+  .login-title {
+    font-size: 1.6rem;
+  }
+
+  .register-link {
+    width: 100%;
+    justify-content: center;
+  }
+}

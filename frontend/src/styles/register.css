@@ -1,0 +1,229 @@
+.propertywave-register-background {
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.6);
+  background-blend-mode: overlay;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.propertywave-register-wrapper {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 40px 60px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  width: 90%;
+  max-width: 1200px;
+  animation: fadeIn 1s ease-in-out;
+  backdrop-filter: blur(6px);
+}
+
+.propertywave-register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.register-heading {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #0c8cac;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.register-heading span {
+  color: #055f6d;
+}
+
+.register-subtitle {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+.register-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.form-field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-field label {
+  font-size: 0.9rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.propertywave-register-form input,
+.propertywave-register-form select {
+  padding: 14px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  transition: 0.3s ease;
+  background-color: #fff;
+  width: 100%;
+}
+
+.propertywave-register-form input:focus,
+.propertywave-register-form select:focus {
+  border-color: #0c8cac;
+  box-shadow: 0 0 10px rgba(12, 140, 172, 0.2);
+  outline: none;
+}
+
+/* Password Strength Bar */
+.password-strength-container {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background-color: #eee;
+  border-radius: 2px;
+  margin-top: 5px;
+  overflow: hidden;
+}
+
+.password-strength-bar {
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.password-strength-bar.weak {
+  width: 33%;
+  background-color: #ff4444;
+}
+
+.password-strength-bar.medium {
+  width: 66%;
+  background-color: #ffbb33;
+}
+
+.password-strength-bar.strong {
+  width: 100%;
+  background-color: #00C851;
+}
+
+.password-strength-text {
+  position: absolute;
+  right: 0;
+  top: -20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.password-strength-text.weak {
+  color: #ff4444;
+}
+
+.password-strength-text.medium {
+  color: #ffbb33;
+}
+
+.password-strength-text.strong {
+  color: #00C851;
+}
+
+.propertywave-register-form button {
+  margin-top: 20px;
+  padding: 14px;
+  font-size: 1.1rem;
+  background: linear-gradient(to right, #0c8cac, #055f6d);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 200px;
+  margin: 20px auto;
+}
+
+.propertywave-register-form button:hover {
+  background: linear-gradient(to right, #055f6d, #0c8cac);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Success and Error Messages with Animation */
+.register-popup {
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 1rem;
+  text-align: center;
+  font-weight: 500;
+  animation: togglePopup 0.4s ease;
+}
+
+.register-popup.success {
+  background-color: #e6fff1;
+  color: #217a4e;
+  border: 1px solid #a0e0b5;
+}
+
+.register-popup.error {
+  background-color: #ffe6e6;
+  color: #a32b2b;
+  border: 1px solid #ffb0b0;
+}
+
+@keyframes togglePopup {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1200px) {
+  .register-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .register-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .register-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .propertywave-register-wrapper {
+    padding: 30px;
+    width: 95%;
+  }
+}
