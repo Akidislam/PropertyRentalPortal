@@ -7,7 +7,7 @@ import { useToast } from '../context/ToastContext';
 import UpdateProfile from '../components/UpdateProfile';
 import DashboardSidebar from '../components/DashboardSidebar';
 import {
-  FaHome, FaWallet, FaCreditCard, FaHistory, FaStar, FaUserEdit, FaSearch, FaMapMarkerAlt, FaUser, FaCheckCircle
+  FaHome, FaWallet, FaCreditCard, FaHistory, FaStar, FaUserEdit, FaSearch, FaUser, FaCheckCircle
 } from 'react-icons/fa';
 
 const TenantDashboard = () => {

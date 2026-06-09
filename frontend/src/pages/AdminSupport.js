@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaEnvelope, FaPhone, FaUser, FaComment, FaTimes, FaHeadset, FaSearch, FaFilter, FaCalendarAlt, FaRocket, FaCheckCircle } from 'react-icons/fa';
+import { FaEnvelope, FaUser, FaComment, FaTimes, FaHeadset, FaSearch, FaFilter, FaCalendarAlt, FaRocket, FaCheckCircle } from 'react-icons/fa';
 import { useToast } from '../context/ToastContext';
 import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';

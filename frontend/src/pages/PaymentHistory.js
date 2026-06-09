@@ -3,7 +3,7 @@ import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { generatePaymentHistoryPDF } from '../utils/pdfGenerator';
-import { FaDownload, FaMoneyBillWave, FaCalendarAlt, FaMapMarkerAlt, FaHome, FaTimes, FaEye, FaFileInvoiceDollar } from 'react-icons/fa';
+import { FaDownload, FaMapMarkerAlt, FaTimes, FaEye, FaFileInvoiceDollar } from 'react-icons/fa';
 import { useToast } from '../context/ToastContext';
 import DashboardSidebar from '../components/DashboardSidebar';
 

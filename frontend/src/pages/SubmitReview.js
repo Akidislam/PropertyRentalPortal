@@ -4,7 +4,7 @@ import { BASE_URL } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
-import { FaStar, FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaPenNib, FaBuilding } from 'react-icons/fa';
+import { FaStar, FaUser, FaEnvelope, FaMapMarkerAlt, FaPenNib, FaBuilding } from 'react-icons/fa';
 
 const SubmitReview = () => {
   const navigate = useNavigate();

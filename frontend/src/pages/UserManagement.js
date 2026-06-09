@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../context/ToastContext';
 import DashboardSidebar from '../components/DashboardSidebar';
-import { FaUserPlus, FaEdit, FaTrash, FaUser, FaEnvelope, FaIdCard, FaPhone, FaCalendarAlt, FaUserShield, FaHistory } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaUser, FaEnvelope, FaIdCard, FaPhone, FaCalendarAlt, FaUserShield, FaHistory } from 'react-icons/fa';
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
@@ -13,7 +13,7 @@ const UserManagement = () => {
     name: '', email: '', password: '', birthDate: '', nid: '', phoneNumber: '', role: 'tenant',
   });
   const [editingUserId, setEditingUserId] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const navigate = useNavigate();
   const { showToast } = useToast();
 

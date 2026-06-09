@@ -159,7 +159,7 @@ const TenantRental = () => {
               ) : (
                 <img
                   src="https://via.placeholder.com/300x200?text=No+Image"
-                  alt="No image available"
+                  alt="No preview available"
                 />
               )}
               {property.isRented && (

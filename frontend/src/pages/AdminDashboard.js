@@ -19,7 +19,7 @@ const AdminDashboard = () => {
     totalApplications: '0',
     totalReviews: '0'
   });
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
 
   const fetchStats = async () => {
     try {
