@@ -51,7 +51,7 @@ const MyProfile = () => {
     <div className="min-h-screen bg-slate-50 flex">
       <DashboardSidebar role={userRole} onLogout={handleLogout} />
 
-      <main className="flex-grow ml-64 p-10">
+      <main className="flex-grow lg:ml-64 p-6 md:p-10">
         <button onClick={() => navigate(-1)} className="mb-8 flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary-600 transition-colors">
           <FaArrowLeft /> Return to Dashboard
         </button>

@@ -108,7 +108,7 @@ const LandlordDashboard = () => {
     <div className="min-h-screen bg-slate-50 flex font-sans">
       <DashboardSidebar role="landlord" onLogout={handleLogout} />
 
-      <main className="flex-grow ml-64 p-10">
+      <main className="flex-grow lg:ml-64 p-6 md:p-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

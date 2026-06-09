@@ -55,7 +55,7 @@ const PropertyList = () => {
     <div className="min-h-screen bg-slate-50 flex">
       <DashboardSidebar role={user?.role || 'tenant'} onLogout={handleLogout} />
 
-      <main className="flex-grow ml-64 p-10">
+      <main className="flex-grow lg:ml-64 p-6 md:p-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -165,8 +165,8 @@ const PropertyList = () => {
                     key={i + 1}
                     onClick={() => setCurrentPage(i + 1)}
                     className={`w-12 h-12 rounded-2xl font-black text-xs transition-all shadow-sm ${currentPage === i + 1
-                        ? 'bg-primary-600 text-white shadow-primary-600/20'
-                        : 'bg-white text-slate-400 border border-slate-100 hover:border-primary-500'
+                      ? 'bg-primary-600 text-white shadow-primary-600/20'
+                      : 'bg-white text-slate-400 border border-slate-100 hover:border-primary-500'
                       }`}
                   >
                     {String(i + 1).padStart(2, '0')}

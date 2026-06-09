@@ -64,7 +64,7 @@ const AdminSupport = () => {
     <div className="min-h-screen bg-slate-50 flex font-sans">
       <DashboardSidebar role="admin" onLogout={handleLogout} />
 
-      <main className="flex-grow ml-64 p-10 text-slate-900">
+      <main className="flex-grow lg:ml-64 p-6 md:p-10 text-slate-900">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-8">

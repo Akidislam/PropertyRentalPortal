@@ -70,7 +70,7 @@ const AdminApproval = () => {
     <div className="min-h-screen bg-slate-50 flex font-sans">
       <DashboardSidebar role="admin" onLogout={handleLogout} />
 
-      <main className="flex-grow ml-64 p-10">
+      <main className="flex-grow lg:ml-64 p-6 md:p-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -157,10 +157,10 @@ const AdminApproval = () => {
                         </td>
                         <td className="px-6 py-5 text-center whitespace-nowrap">
                           <span className={`inline-block px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-[0.2em] ${property.status === 'approved'
-                              ? 'bg-green-50 text-green-600 border border-green-100'
-                              : property.status === 'rejected'
-                                ? 'bg-red-50 text-red-600 border border-red-100'
-                                : 'bg-amber-50 text-amber-600 border border-amber-100 shadow-sm shadow-amber-600/5 animate-pulse'
+                            ? 'bg-green-50 text-green-600 border border-green-100'
+                            : property.status === 'rejected'
+                              ? 'bg-red-50 text-red-600 border border-red-100'
+                              : 'bg-amber-50 text-amber-600 border border-amber-100 shadow-sm shadow-amber-600/5 animate-pulse'
                             }`}>
                             {property.status || 'Pending'}
                           </span>

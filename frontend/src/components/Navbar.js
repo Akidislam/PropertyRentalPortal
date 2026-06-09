@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { FaHome, FaInfoCircle, FaHeadset, FaComments, FaBars, FaTimes, FaRocket, FaBuilding, FaSignOutAlt } from 'react-icons/fa';
+import { FaHome, FaInfoCircle, FaHeadset, FaComments, FaBars, FaTimes, FaRocket, FaBuilding, FaSignOutAlt, FaPlus, FaUsers, FaWallet, FaCheckCircle } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
@@ -35,6 +35,22 @@ const Navbar = () => {
     { name: 'Reviews', path: '/view-reviews', icon: <FaComments /> },
     { name: 'Support', path: '/support', icon: <FaHeadset /> },
   ];
+
+  const dashboardLinks = admin ? [
+    { name: 'Overview', path: '/admin-dashboard', icon: <FaRocket /> },
+    { name: 'User Management', path: '/user-management', icon: <FaUsers /> },
+    { name: 'Approvals', path: '/admin-approval', icon: <FaBuilding /> },
+  ] : user?.role === 'landlord' ? [
+    { name: 'Overview', path: '/landlord-dashboard', icon: <FaRocket /> },
+    { name: 'Add Property', path: '/add-property', icon: <FaPlus /> },
+    { name: 'Approvals', path: '/landlord-approval-rental', icon: <FaBuilding /> },
+    { name: 'Wallet', path: '/landlord-wallet', icon: <FaWallet /> },
+  ] : user?.role === 'tenant' ? [
+    { name: 'Overview', path: '/tenant-dashboard', icon: <FaRocket /> },
+    { name: 'Browse', path: '/property-list', icon: <FaBuilding /> },
+    { name: 'Approved', path: '/tenant-approved-requests', icon: <FaCheckCircle /> },
+    { name: 'Wallet', path: '/tenant-wallet', icon: <FaWallet /> },
+  ] : [];
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled || !isHomePage ? 'glass-nav py-3' : 'bg-transparent py-6'}`}>
@@ -135,37 +151,67 @@ const Navbar = () => {
               </button>
             </div>
 
-            <div className="flex-grow space-y-8">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center justify-between group"
-                >
-                  <span className={`text-xl font-black uppercase tracking-tighter transition-colors ${location.pathname === link.path ? 'text-primary-600' : 'text-slate-300 group-hover:text-slate-900'}`}>
-                    {link.name}
-                  </span>
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${location.pathname === link.path ? 'bg-primary-600 text-white' : 'bg-slate-50 text-slate-300 group-hover:bg-primary-50 group-hover:text-primary-600'}`}>
-                    {link.icon}
+            <div className="flex-grow space-y-8 overflow-y-auto custom-scrollbar pr-2">
+              {/* Primary Links */}
+              <div className="space-y-6">
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Navigation</span>
+                <div className="space-y-4">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.path}
+                      to={link.path}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center justify-between group"
+                    >
+                      <span className={`text-lg font-black uppercase tracking-tighter transition-colors ${location.pathname === link.path ? 'text-primary-600' : 'text-slate-300 group-hover:text-slate-900'}`}>
+                        {link.name}
+                      </span>
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${location.pathname === link.path ? 'bg-primary-600 text-white' : 'bg-slate-50 text-slate-300 group-hover:bg-primary-50 group-hover:text-primary-600'}`}>
+                        {link.icon}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Dashboard Specific Links (Only if logged in) */}
+              {(user || admin) && dashboardLinks.length > 0 && (
+                <div className="space-y-6 pt-6 border-t border-slate-50">
+                  <span className="text-[10px] font-black text-primary-600 uppercase tracking-widest pl-1">Management Hub</span>
+                  <div className="space-y-4">
+                    {dashboardLinks.map((link) => (
+                      <Link
+                        key={link.path}
+                        to={link.path}
+                        onClick={() => setIsMenuOpen(false)}
+                        className="flex items-center justify-between group"
+                      >
+                        <span className={`text-lg font-black uppercase tracking-tighter transition-colors ${location.pathname === link.path ? 'text-primary-600' : 'text-slate-300 group-hover:text-slate-900'}`}>
+                          {link.name}
+                        </span>
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${location.pathname === link.path ? 'bg-primary-600 text-white' : 'bg-slate-50 text-slate-300 group-hover:bg-primary-50 group-hover:text-primary-600'}`}>
+                          {link.icon}
+                        </div>
+                      </Link>
+                    ))}
                   </div>
-                </Link>
-              ))}
+                </div>
+              )}
             </div>
 
-            <div className="pt-10 border-t border-slate-100 flex flex-col gap-4">
+            <div className="pt-8 border-t border-slate-100 flex flex-col gap-3">
               {user || admin ? (
-                <>
-                  <Link to={admin ? "/admin-dashboard" : "/tenant-dashboard"} onClick={() => setIsMenuOpen(false)} className="w-full py-5 rounded-[2rem] bg-slate-900 text-white font-black uppercase tracking-widest text-center text-[10px]">Console</Link>
-                  <button onClick={handleLogout} className="w-full py-5 rounded-[2rem] bg-red-50 text-red-500 font-black uppercase tracking-widest text-[10px]">Logout</button>
-                </>
+                <button onClick={handleLogout} className="w-full py-4 rounded-2xl bg-red-50 text-red-500 font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-2 hover:bg-red-500 hover:text-white transition-all">
+                  <FaSignOutAlt /> Terminate Session
+                </button>
               ) : (
                 <>
-                  <Link to="/login" onClick={() => setIsMenuOpen(false)} className="w-full py-5 rounded-[2rem] bg-slate-50 text-slate-900 font-black uppercase tracking-widest text-center text-[10px]">Login</Link>
-                  <Link to="/register" onClick={() => setIsMenuOpen(false)} className="w-full py-5 rounded-[2rem] bg-primary-600 text-white font-black uppercase tracking-widest text-center text-[10px]">Register</Link>
+                  <Link to="/login" onClick={() => setIsMenuOpen(false)} className="w-full py-4 rounded-2xl bg-slate-50 text-slate-900 font-black uppercase tracking-widest text-center text-[10px]">Login</Link>
+                  <Link to="/register" onClick={() => setIsMenuOpen(false)} className="w-full py-4 rounded-2xl bg-primary-600 text-white font-black uppercase tracking-widest text-center text-[10px]">Register</Link>
                 </>
               )}
             </div>
+
           </motion.div>
         )}
       </AnimatePresence>
