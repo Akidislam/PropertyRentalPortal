@@ -36,78 +36,78 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'glass-nav py-4 shadow-[0_10px_40px_rgba(0,0,0,0.04)]' : 'bg-transparent py-7'}`}>
-      <div className="container mx-auto px-6 lg:px-12 flex items-center justify-between">
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'glass-nav py-3' : 'bg-transparent py-6'}`}>
+      <div className="container mx-auto px-4 md:px-8 lg:px-12 flex items-center justify-between">
         {/* Logo Section */}
-        <Link to="/" className="flex items-center gap-4 group">
+        <Link to="/" className="flex items-center gap-3 group shrink-0">
           <div className="relative">
-            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 shadow-xl ${isScrolled ? 'bg-primary-600 rotate-0' : 'bg-white/10 backdrop-blur-md rotate-[-10deg] group-hover:rotate-0'}`}>
-              <FaBuilding className={`${isScrolled ? 'text-white' : 'text-primary-600'} text-xl`} />
+            <div className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl flex items-center justify-center transition-all duration-500 shadow-xl ${isScrolled ? 'bg-primary-600 rotate-0' : 'bg-white/10 backdrop-blur-md rotate-[-10deg] group-hover:rotate-0'}`}>
+              <FaBuilding className={`${isScrolled ? 'text-white' : 'text-primary-600'} text-lg md:text-xl`} />
             </div>
-            {!isScrolled && (
-              <div className="absolute -inset-1 bg-primary-600/20 rounded-2xl blur opacity-30 group-hover:opacity-100 transition-opacity"></div>
-            )}
           </div>
           <div className="flex flex-col">
-            <span className={`text-2xl font-black tracking-tighter uppercase italic leading-none ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
+            <span className={`text-xl md:text-2xl font-black tracking-tighter uppercase italic leading-none ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
               Property<span className={`${isScrolled ? 'text-primary-600' : 'text-primary-400'}`}>Wave</span>
             </span>
-            <span className={`text-[9px] font-bold uppercase tracking-[0.4em] mt-1 ${isScrolled ? 'text-slate-400' : 'text-slate-300'}`}>Elite Realty</span>
+            <span className={`text-[8px] md:text-[9px] font-bold uppercase tracking-[0.4em] mt-1 ${isScrolled ? 'text-slate-400' : 'text-slate-300'}`}>Elite Realty</span>
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className={`hidden lg:flex items-center gap-2 p-1.5 rounded-full border transition-all duration-500 ${isScrolled ? 'bg-slate-50/50 border-slate-100' : 'bg-white/5 border-white/10 backdrop-blur-md'}`}>
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className={`px-6 py-2.5 rounded-full text-[11px] font-black uppercase tracking-widest transition-all duration-300 flex items-center gap-2.5 ${location.pathname === link.path
-                ? (isScrolled ? 'bg-white text-primary-600 shadow-sm' : 'bg-white/20 text-white shadow-lg shadow-black/5')
-                : (isScrolled ? 'text-slate-500 hover:text-slate-900' : 'text-slate-300 hover:text-white')
-                }`}
-            >
-              <span className="opacity-60">{link.icon}</span>
-              {link.name}
-            </Link>
-          ))}
+        {/* Desktop Navigation - Centered */}
+        <div className="hidden lg:flex flex-1 justify-center px-8">
+          <div className={`flex items-center gap-1 p-1 rounded-full border transition-all duration-500 ${isScrolled ? 'bg-slate-100/80 border-slate-200' : 'bg-white/10 border-white/20 backdrop-blur-xl'}`}>
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 flex items-center gap-2 ${location.pathname === link.path
+                  ? (isScrolled ? 'bg-white text-primary-600 shadow-sm' : 'bg-white text-slate-900 shadow-xl shadow-black/20')
+                  : (isScrolled ? 'text-slate-500 hover:text-primary-600' : 'text-white/70 hover:text-white')
+                  }`}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
         </div>
 
-        {/* Dashboard/Auth Actions */}
-        <div className="hidden lg:flex items-center gap-4">
+        {/* Auth Actions - Right Aligned */}
+        <div className="hidden md:flex items-center gap-3 shrink-0">
           {user || admin ? (
             <div className="flex items-center gap-3">
               <Link
                 to={admin ? "/admin-dashboard" : user.role === 'landlord' ? "/landlord-dashboard" : "/tenant-dashboard"}
-                className={`flex items-center gap-3 px-7 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl active:scale-95 ${isScrolled ? 'bg-slate-900 text-white hover:bg-slate-800' : 'bg-white text-slate-900 hover:bg-slate-50 shadow-white/10'}`}
+                className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl active:scale-95 ${isScrolled ? 'bg-slate-900 text-white hover:bg-slate-800' : 'bg-white text-slate-900 hover:bg-slate-50 shadow-white/10'}`}
               >
-                <FaRocket className="animate-pulse" />
+                <FaRocket className="animate-pulse text-xs" />
                 <span>Console</span>
               </Link>
               <button
                 onClick={handleLogout}
-                className="w-12 h-12 rounded-2xl bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-all duration-500 flex items-center justify-center shadow-lg active:scale-95"
+                className="w-10 h-10 md:w-11 md:h-11 rounded-xl bg-red-50 text-red-500 hover:bg-red-600 hover:text-white transition-all duration-500 flex items-center justify-center shadow-md active:scale-95"
               >
-                <FaSignOutAlt />
+                <FaSignOutAlt className="text-sm" />
               </button>
             </div>
           ) : (
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <Link
                 to="/login"
-                className={`text-[10px] font-black uppercase tracking-widest transition-colors px-6 ${isScrolled ? 'text-slate-600 hover:text-slate-900' : 'text-white/80 hover:text-white'}`}
+                className={`text-[10px] font-black uppercase tracking-widest transition-colors px-4 ${isScrolled ? 'text-slate-600 hover:text-slate-900' : 'text-white/80 hover:text-white'}`}
               >
                 Login
               </Link>
               <Link
                 to="/register"
-                className={`px-8 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl active:scale-95 ${isScrolled ? 'bg-primary-600 text-white hover:bg-primary-700' : 'bg-white text-slate-900 hover:bg-slate-50 shadow-white/10'}`}
+                className={`px-6 md:px-8 py-3 md:py-3.5 rounded-xl md:rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl active:scale-95 ${isScrolled ? 'bg-primary-600 text-white hover:bg-primary-700' : 'bg-white text-slate-900 hover:bg-slate-50 shadow-white/10'}`}
               >
                 Register
               </Link>
             </div>
           )}
         </div>
+
+
 
         {/* Mobile Toggle */}
         <button

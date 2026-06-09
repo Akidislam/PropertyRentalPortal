@@ -215,16 +215,17 @@ const About = () => {
                 Our advisors are prepared to assist you with every aspect of your real estate journey.
               </p>
               <div className="space-y-6">
-                <div className="flex items-center gap-4 bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/10">
+                <a href="tel:01790270005" className="flex items-center gap-4 bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/10 hover:bg-white/20 transition-all">
                   <FaPhoneAlt className="text-primary-200" />
-                  <span className="font-black tracking-tight text-lg">+880 1234 567 890</span>
-                </div>
-                <div className="flex items-center gap-4 bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/10">
+                  <span className="font-black tracking-tight text-lg">01790270005</span>
+                </a>
+                <a href="mailto:akidlislam7720@gmail.com" className="flex items-center gap-4 bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/10 hover:bg-white/20 transition-all">
                   <FaEnvelope className="text-primary-200" />
-                  <span className="font-black tracking-tight text-lg">concierge@propertywave.com</span>
-                </div>
+                  <span className="font-black tracking-tight text-lg underline underline-offset-4">akidlislam7720@gmail.com</span>
+                </a>
               </div>
             </div>
+
           </div>
         </section>
       </div>

@@ -239,37 +239,11 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Final Footer */}
-      <footer className="py-20 border-t border-slate-100 bg-white">
-        <div className="container mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-12">
-          <div className="flex flex-col items-center md:items-start gap-6">
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary-200">
-                <FaHome className="text-white text-lg" />
-              </div>
-              <span className="text-2xl font-black text-slate-900 tracking-tighter uppercase italic">
-                Property<span className="text-primary-600">Wave</span>
-              </span>
-            </div>
-            <div className="flex gap-10">
-              <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors cursor-pointer">Terms</div>
-              <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors cursor-pointer">Security</div>
-              <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors cursor-pointer">Network</div>
-            </div>
-          </div>
-
-          <div className="flex flex-col md:items-end text-center md:text-right">
-            <div className="text-slate-900 font-black uppercase tracking-[0.2em] text-[10px]">
-              © 2026 PropertyWave International.
-            </div>
-            <div className="text-slate-400 font-bold text-[8px] uppercase tracking-[0.5em] mt-3">
-              Elite Property Management Ecosystem
-            </div>
-          </div>
-        </div>
-      </footer>
+      {/* Final Space */}
+      <div className="py-10"></div>
     </div>
   );
 };
+
 
 export default Home;

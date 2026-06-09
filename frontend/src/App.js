@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'r
 import { AnimatePresence } from 'framer-motion';
 import { ToastProvider } from './context/ToastContext';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
@@ -37,11 +38,11 @@ import MyProfile from './pages/MyProfile';
 const ProtectedRoute = ({ children }) => {
   const admin = JSON.parse(localStorage.getItem('admin'));
   const adminToken = localStorage.getItem('adminToken');
-  
+
   if (!admin || !adminToken) {
     return <Navigate to="/admin" replace />;
   }
-  
+
   return children;
 };
 
@@ -49,11 +50,11 @@ const ProtectedRoute = ({ children }) => {
 const UserProtectedRoute = ({ children }) => {
   const user = JSON.parse(localStorage.getItem('user'));
   const token = localStorage.getItem('token');
-  
+
   if (!user || !token) {
     return <Navigate to="/login" replace />;
   }
-  
+
   return children;
 };
 
@@ -61,7 +62,7 @@ const UserProtectedRoute = ({ children }) => {
 const WalletHistoryRoute = ({ children }) => {
   const user = JSON.parse(localStorage.getItem('user'));
   const token = localStorage.getItem('token');
-  
+
   if (!user || !token) {
     return <Navigate to="/login" replace />;
   }
@@ -70,26 +71,26 @@ const WalletHistoryRoute = ({ children }) => {
   if (user.role !== 'landlord' && user.role !== 'tenant') {
     return <Navigate to="/" replace />;
   }
-  
+
   return children;
 };
 
 const AnimatedRoutes = () => {
   const location = useLocation();
-  
+
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         {/* Public Routes */}
-        <Route path="/" element={<Home />} /> 
+        <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<Admin />} />
-        <Route path="/about" element={<About/>}/>
+        <Route path="/about" element={<About />} />
         <Route path="/support" element={<Support />} />
         <Route path="/submit-review" element={<SubmitReview />} />
         <Route path="/view-reviews" element={<ViewReviews />} />
-        
+
         {/* Protected User Routes */}
         <Route path="/landlord-dashboard/*" element={
           <UserProtectedRoute>
@@ -123,43 +124,43 @@ const AnimatedRoutes = () => {
           <UserProtectedRoute>
             <AddProperty />
           </UserProtectedRoute>
-        }/>
+        } />
 
         <Route path="/property-list" element={
           <UserProtectedRoute>
             <PropertyList />
           </UserProtectedRoute>
-        }/>
+        } />
 
         <Route path="/tenant-rental-request" element={
           <UserProtectedRoute>
             <TenantRental />
           </UserProtectedRoute>
-        }/>
+        } />
 
         <Route path="/landlord-approval-rental" element={
           <UserProtectedRoute>
             <LandlordRental />
           </UserProtectedRoute>
-        }/>
+        } />
 
         <Route path="/tenant-approved-requests" element={
           <UserProtectedRoute>
             <TenantApprovedRequests />
           </UserProtectedRoute>
-        }/>
+        } />
 
         <Route path="/payment-history" element={
           <UserProtectedRoute>
             <PaymentHistory />
           </UserProtectedRoute>
-        }/>
+        } />
 
         <Route path="/my-profile" element={
           <UserProtectedRoute>
             <MyProfile />
           </UserProtectedRoute>
-        }/>
+        } />
 
         <Route path="/wallet-history" element={
           <WalletHistoryRoute>
@@ -172,37 +173,37 @@ const AnimatedRoutes = () => {
           <ProtectedRoute>
             <AdminDashboard />
           </ProtectedRoute>
-        }/>
+        } />
         <Route path="/user-management" element={
           <ProtectedRoute>
             <UserManagement />
           </ProtectedRoute>
-        }/>
+        } />
         <Route path="/user-details" element={
           <ProtectedRoute>
             <UserDetails />
           </ProtectedRoute>
-        }/>
+        } />
         <Route path="/user-details/:id" element={
           <ProtectedRoute>
             <UserDetailsRecord />
           </ProtectedRoute>
-        }/>
+        } />
         <Route path="/admin-approval" element={
           <ProtectedRoute>
             <AdminApproval />
           </ProtectedRoute>
-        }/>
+        } />
         <Route path="/admin-about" element={
           <ProtectedRoute>
             <AdminAbout />
           </ProtectedRoute>
-        }/>
+        } />
         <Route path="/admin-support" element={
           <ProtectedRoute>
             <AdminSupport />
           </ProtectedRoute>
-        }/>
+        } />
         <Route path="/admin/reviews" element={<ProtectedRoute><AdminReview /></ProtectedRoute>} />
         <Route path="/all-users" element={<AllUsers />} />
       </Routes>
@@ -210,15 +211,27 @@ const AnimatedRoutes = () => {
   );
 };
 
+const AppContent = () => {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+
+  return (
+    <div className={isHomePage ? '' : 'pt-24'}>
+      <AnimatedRoutes />
+    </div>
+  );
+};
+
 const App = () => {
   return (
     <ToastProvider>
       <Router>
-        <div className="min-h-screen flex flex-col pt-20">
+        <div className="min-h-screen flex flex-col pt-0">
           <Navbar />
           <main className="flex-grow">
-            <AnimatedRoutes />
+            <AppContent />
           </main>
+          <Footer />
         </div>
       </Router>
     </ToastProvider>
