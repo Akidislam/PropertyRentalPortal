@@ -3,7 +3,7 @@ import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
-import { FaStar, FaMapMarkerAlt, FaCalendarAlt, FaEnvelope, FaPhone, FaQuoteLeft, FaSortAmountDown, FaComments } from 'react-icons/fa';
+import { FaStar, FaMapMarkerAlt, FaCalendarAlt, FaEnvelope, FaQuoteLeft, FaSortAmountDown, FaComments } from 'react-icons/fa';
 
 const ViewReviews = () => {
   const [reviews, setReviews] = useState([]);
@@ -12,20 +12,20 @@ const ViewReviews = () => {
   const { showToast } = useToast();
 
   useEffect(() => {
-    fetchReviews();
-  }, [sortBy]);
+    const fetchReviews = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${BASE_URL}/api/reviews/all?sortBy=${sortBy}`);
+        setReviews(response.data);
+      } catch (err) {
+        showToast('error', 'Failed to retrieve property testimonials');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const fetchReviews = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(`${BASE_URL}/api/reviews/all?sortBy=${sortBy}`);
-      setReviews(response.data);
-    } catch (err) {
-      showToast('error', 'Failed to retrieve property testimonials');
-    } finally {
-      setLoading(false);
-    }
-  };
+    fetchReviews();
+  }, [sortBy, showToast]);
 
   const renderStars = (rating) => {
     return (
@@ -61,19 +61,19 @@ const ViewReviews = () => {
           </div>
 
           <div className="flex items-center gap-4 bg-white p-2 rounded-2xl shadow-sm border border-slate-100">
-             <div className="flex items-center gap-2 px-4 py-2 border-r border-slate-100">
-                <FaSortAmountDown className="text-slate-400" />
-                <span className="text-xs font-black text-slate-400 uppercase tracking-widest">Order</span>
-             </div>
-             <select 
-               value={sortBy} 
-               onChange={(e) => setSortBy(e.target.value)}
-               className="bg-transparent text-slate-900 font-bold text-sm outline-none pr-8 py-2 appearance-none cursor-pointer"
-             >
-               <option value="date">Most Recent</option>
-               <option value="rating">Highest Rated</option>
-               <option value="name">Author Alpha</option>
-             </select>
+            <div className="flex items-center gap-2 px-4 py-2 border-r border-slate-100">
+              <FaSortAmountDown className="text-slate-400" />
+              <span className="text-xs font-black text-slate-400 uppercase tracking-widest">Order</span>
+            </div>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="bg-transparent text-slate-900 font-bold text-sm outline-none pr-8 py-2 appearance-none cursor-pointer"
+            >
+              <option value="date">Most Recent</option>
+              <option value="rating">Highest Rated</option>
+              <option value="name">Author Alpha</option>
+            </select>
           </div>
         </div>
 
@@ -116,10 +116,10 @@ const ViewReviews = () => {
                   <div className="bg-slate-50 rounded-3xl p-6 mb-8 flex-grow relative overflow-hidden">
                     <FaQuoteLeft className="absolute -top-2 -left-2 text-slate-100 text-6xl rotate-12" />
                     <div className="relative z-10">
-                       <h5 className="font-black text-slate-900 text-sm mb-2 uppercase tracking-tight group-hover:text-primary-600 transition-colors">{review.propertyTitle}</h5>
-                       <p className="text-slate-600 text-sm leading-relaxed italic font-medium">
+                      <h5 className="font-black text-slate-900 text-sm mb-2 uppercase tracking-tight group-hover:text-primary-600 transition-colors">{review.propertyTitle}</h5>
+                      <p className="text-slate-600 text-sm leading-relaxed italic font-medium">
                         "{review.review}"
-                       </p>
+                      </p>
                     </div>
                   </div>
 
@@ -144,4 +144,3 @@ const ViewReviews = () => {
 };
 
 export default ViewReviews;
- 
