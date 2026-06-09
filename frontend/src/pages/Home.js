@@ -51,10 +51,11 @@ const Home = () => {
       <section className="relative h-[95vh] w-full flex items-center justify-center overflow-hidden">
         <motion.div style={{ y: y1 }} className="absolute inset-0 z-0">
           <img src={heroImg} alt="Luxury Real Estate" className="w-full h-full object-cover scale-110" />
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/40 to-slate-900"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/40 to-slate-900"></div>
         </motion.div>
 
-        <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">
+        <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center pt-24">
+
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}

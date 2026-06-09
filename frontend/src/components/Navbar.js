@@ -62,7 +62,7 @@ const Navbar = () => {
                 to={link.path}
                 className={`px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 flex items-center gap-2 ${location.pathname === link.path
                   ? (isScrolled ? 'bg-white text-primary-600 shadow-sm' : 'bg-white text-slate-900 shadow-xl shadow-black/20')
-                  : (isScrolled ? 'text-slate-500 hover:text-primary-600' : 'text-white/70 hover:text-white')
+                  : (isScrolled ? 'text-slate-600 hover:text-primary-600' : 'text-slate-200 hover:text-white hover:bg-white/10')
                   }`}
               >
                 {link.name}
