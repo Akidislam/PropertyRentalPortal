@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import { motion } from 'framer-motion';
-import { FaUser, FaHistory, FaHome, FaCreditCard, FaArrowLeft, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaHistory, FaHome, FaCreditCard, FaArrowLeft, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import { useToast } from '../context/ToastContext';
 import DashboardSidebar from '../components/DashboardSidebar';
 
@@ -28,7 +28,7 @@ const MyProfile = () => {
       }
     };
     fetchHistory();
-  }, []);
+  }, [showToast]);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -37,7 +37,7 @@ const MyProfile = () => {
 
   if (loading) return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-       <div className="w-12 h-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin"></div>
+      <div className="w-12 h-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin"></div>
     </div>
   );
 
@@ -48,7 +48,7 @@ const MyProfile = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex">
       <DashboardSidebar role={userRole} onLogout={handleLogout} />
-      
+
       <main className="flex-grow ml-64 p-10">
         <button onClick={() => navigate(-1)} className="mb-8 flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary-600 transition-colors">
           <FaArrowLeft /> Return to Dashboard
@@ -102,12 +102,12 @@ const MyProfile = () => {
                   </div>
                   <h2 className="text-lg font-black text-slate-900 uppercase tracking-tight">{user.role === 'landlord' ? 'My Asset Portfolio' : 'My Rental Requests'}</h2>
                 </div>
-                
+
                 <div className="space-y-4">
                   {(user.role === 'landlord' ? properties : rentalRequests).length > 0 ? (
                     (user.role === 'landlord' ? properties : rentalRequests).map((item) => (
                       <div key={item._id} className="bg-white p-6 rounded-3xl border border-slate-100 flex gap-4 hover:shadow-md transition-all group">
-                        <img 
+                        <img
                           src={user.role === 'landlord' ? `${BASE_URL}${item.images[0]}` : `${BASE_URL}${item.propertyId?.images?.[0]}`}
                           alt="Asset"
                           className="w-20 h-20 rounded-2xl object-cover"

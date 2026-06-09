@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
-import { FaSignInAlt, FaEnvelope, FaLock, FaUserShield, FaBuilding, FaArrowRight, FaCheckCircle, FaShieldAlt } from 'react-icons/fa';
+import { FaSignInAlt, FaEnvelope, FaLock, FaUserShield, FaBuilding, FaArrowRight, FaCheckCircle } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
 import p7 from '../assets/p7.jpg';
 
 const Login = () => {
-  const [formData, setFormData] = useState({ 
-    email: '', 
-    password: '', 
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
     role: 'tenant'
   });
   const [loading, setLoading] = useState(false);
@@ -24,7 +24,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     setLoading(true);
     try {
       const res = await axios.post(`${BASE_URL}/api/auth/login`, {
@@ -32,7 +32,7 @@ const Login = () => {
         password: formData.password,
         role: formData.role
       });
-      
+
       if (res.data && res.data.token && res.data.user) {
         const { token, user } = res.data;
         localStorage.setItem('token', token);
@@ -58,13 +58,13 @@ const Login = () => {
     <div className="min-h-screen flex bg-white">
       {/* Left Side - Image/Branding (Hidden on mobile) */}
       <div className="hidden lg:flex w-1/2 relative overflow-hidden bg-slate-900">
-        <img 
-          src={p7} 
-          alt="Luxury Property" 
+        <img
+          src={p7}
+          alt="Luxury Property"
           className="absolute inset-0 w-full h-full object-cover opacity-60"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        
+
         <div className="relative z-10 flex flex-col justify-between h-full p-16">
           <Link to="/" className="flex items-center gap-3">
             <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary-200">
@@ -107,7 +107,7 @@ const Login = () => {
                 Property<span className="text-primary-600">Wave</span>
               </span>
             </Link>
-            
+
             <h2 className="text-3xl font-black text-slate-900 tracking-tight uppercase">
               Sign In
             </h2>
@@ -124,11 +124,10 @@ const Login = () => {
                     key={role}
                     type="button"
                     onClick={() => setFormData({ ...formData, role })}
-                    className={`flex-1 py-3 rounded-xl text-sm font-black capitalize transition-all duration-300 border-2 ${
-                      formData.role === role 
-                        ? 'bg-primary-600 border-primary-600 text-white shadow-lg shadow-primary-600/30' 
+                    className={`flex-1 py-3 rounded-xl text-sm font-black capitalize transition-all duration-300 border-2 ${formData.role === role
+                        ? 'bg-primary-600 border-primary-600 text-white shadow-lg shadow-primary-600/30'
                         : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-500'
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center justify-center gap-2">
                       <FaUserShield className="text-base" />
@@ -183,7 +182,7 @@ const Login = () => {
                 <span className={`text-sm font-bold uppercase tracking-widest ${isVerified ? 'text-green-500' : 'text-slate-400'}`}>
                   {isVerified ? 'Verified' : 'Slide to Verify'}
                 </span>
-                
+
                 <motion.div
                   drag="x"
                   dragConstraints={{ left: 0, right: 260 }} // Approximate width of container minus slider
@@ -198,13 +197,13 @@ const Login = () => {
                 >
                   {isVerified ? <FaCheckCircle /> : <FaArrowRight />}
                 </motion.div>
-                
+
                 {isVerified && (
-                   <motion.div 
-                     initial={{ width: 0 }} 
-                     animate={{ width: '100%' }} 
-                     className="absolute left-0 top-0 h-full bg-green-500/10 pointer-events-none" 
-                   />
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: '100%' }}
+                    className="absolute left-0 top-0 h-full bg-green-500/10 pointer-events-none"
+                  />
                 )}
               </div>
             </div>
@@ -212,11 +211,10 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading || !isVerified}
-              className={`w-full py-4 font-black text-sm uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-xl active:scale-95 mt-8 ${
-                isVerified 
-                  ? 'bg-slate-900 hover:bg-slate-800 text-white shadow-slate-900/20' 
+              className={`w-full py-4 font-black text-sm uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-xl active:scale-95 mt-8 ${isVerified
+                  ? 'bg-slate-900 hover:bg-slate-800 text-white shadow-slate-900/20'
                   : 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-none'
-              }`}
+                }`}
             >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -237,11 +235,11 @@ const Login = () => {
               </Link>
             </p>
           </div>
-          
+
           <div className="mt-8 text-center lg:text-left">
-             <Link to="/" className="text-slate-400 hover:text-slate-600 text-xs font-bold transition-colors inline-flex items-center gap-2 uppercase tracking-widest">
-               ← Return to Home
-             </Link>
+            <Link to="/" className="text-slate-400 hover:text-slate-600 text-xs font-bold transition-colors inline-flex items-center gap-2 uppercase tracking-widest">
+              ← Return to Home
+            </Link>
           </div>
         </motion.div>
       </div>
