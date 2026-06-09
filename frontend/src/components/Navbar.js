@@ -36,33 +36,33 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'glass-nav py-3' : 'bg-transparent py-6'}`}>
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled || !isHomePage ? 'glass-nav py-3' : 'bg-transparent py-6'}`}>
       <div className="container mx-auto px-4 md:px-8 lg:px-12 flex items-center justify-between">
         {/* Logo Section */}
         <Link to="/" className="flex items-center gap-3 group shrink-0">
           <div className="relative">
-            <div className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl flex items-center justify-center transition-all duration-500 shadow-xl ${isScrolled ? 'bg-primary-600 rotate-0' : 'bg-white/10 backdrop-blur-md rotate-[-10deg] group-hover:rotate-0'}`}>
-              <FaBuilding className={`${isScrolled ? 'text-white' : 'text-primary-600'} text-lg md:text-xl`} />
+            <div className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl flex items-center justify-center transition-all duration-500 shadow-xl ${isScrolled || !isHomePage ? 'bg-primary-600 rotate-0' : 'bg-white/10 backdrop-blur-md rotate-[-10deg] group-hover:rotate-0'}`}>
+              <FaBuilding className={`${isScrolled || !isHomePage ? 'text-white' : 'text-primary-600'} text-lg md:text-xl`} />
             </div>
           </div>
           <div className="flex flex-col">
-            <span className={`text-xl md:text-2xl font-black tracking-tighter uppercase italic leading-none ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
-              Property<span className={`${isScrolled ? 'text-primary-600' : 'text-primary-400'}`}>Wave</span>
+            <span className={`text-xl md:text-2xl font-black tracking-tighter uppercase italic leading-none ${isScrolled || !isHomePage ? 'text-slate-900' : 'text-white'}`}>
+              Property<span className={`${isScrolled || !isHomePage ? 'text-primary-600' : 'text-primary-400'}`}>Wave</span>
             </span>
-            <span className={`text-[8px] md:text-[9px] font-bold uppercase tracking-[0.4em] mt-1 ${isScrolled ? 'text-slate-400' : 'text-slate-300'}`}>Elite Realty</span>
+            <span className={`text-[8px] md:text-[9px] font-bold uppercase tracking-[0.4em] mt-1 ${isScrolled || !isHomePage ? 'text-slate-400' : 'text-slate-300'}`}>Elite Realty</span>
           </div>
         </Link>
 
         {/* Desktop Navigation - Centered */}
         <div className="hidden lg:flex flex-1 justify-center px-8">
-          <div className={`flex items-center gap-1 p-1 rounded-full border transition-all duration-500 ${isScrolled ? 'bg-slate-100/80 border-slate-200' : 'bg-white/10 border-white/20 backdrop-blur-xl'}`}>
+          <div className={`flex items-center gap-1 p-1 rounded-full border transition-all duration-500 ${isScrolled || !isHomePage ? 'bg-slate-100/80 border-slate-200' : 'bg-white/10 border-white/20 backdrop-blur-xl'}`}>
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
                 className={`px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 flex items-center gap-2 ${location.pathname === link.path
-                  ? (isScrolled ? 'bg-white text-primary-600 shadow-sm' : 'bg-white text-slate-900 shadow-xl shadow-black/20')
-                  : (isScrolled ? 'text-slate-600 hover:text-primary-600' : 'text-slate-200 hover:text-white hover:bg-white/10')
+                  ? (isScrolled || !isHomePage ? 'bg-white text-primary-600 shadow-sm' : 'bg-white text-slate-900 shadow-xl shadow-black/20')
+                  : (isScrolled || !isHomePage ? 'text-slate-600 hover:text-primary-600' : 'text-slate-200 hover:text-white hover:bg-white/10')
                   }`}
               >
                 {link.name}
@@ -77,7 +77,7 @@ const Navbar = () => {
             <div className="flex items-center gap-3">
               <Link
                 to={admin ? "/admin-dashboard" : user.role === 'landlord' ? "/landlord-dashboard" : "/tenant-dashboard"}
-                className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl active:scale-95 ${isScrolled ? 'bg-slate-900 text-white hover:bg-slate-800' : 'bg-white text-slate-900 hover:bg-slate-50 shadow-white/10'}`}
+                className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl active:scale-95 ${isScrolled || !isHomePage ? 'bg-slate-900 text-white hover:bg-slate-800' : 'bg-white text-slate-900 hover:bg-slate-50 shadow-white/10'}`}
               >
                 <FaRocket className="animate-pulse text-xs" />
                 <span>Console</span>
@@ -93,13 +93,13 @@ const Navbar = () => {
             <div className="flex items-center gap-3">
               <Link
                 to="/login"
-                className={`text-[10px] font-black uppercase tracking-widest transition-colors px-4 ${isScrolled ? 'text-slate-600 hover:text-slate-900' : 'text-white/80 hover:text-white'}`}
+                className={`text-[10px] font-black uppercase tracking-widest transition-colors px-4 ${isScrolled || !isHomePage ? 'text-slate-600 hover:text-slate-900' : 'text-white/80 hover:text-white'}`}
               >
                 Login
               </Link>
               <Link
                 to="/register"
-                className={`px-6 md:px-8 py-3 md:py-3.5 rounded-xl md:rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl active:scale-95 ${isScrolled ? 'bg-primary-600 text-white hover:bg-primary-700' : 'bg-white text-slate-900 hover:bg-slate-50 shadow-white/10'}`}
+                className={`px-6 md:px-8 py-3 md:py-3.5 rounded-xl md:rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl active:scale-95 ${isScrolled || !isHomePage ? 'bg-primary-600 text-white hover:bg-primary-700' : 'bg-white text-slate-900 hover:bg-slate-50 shadow-white/10'}`}
               >
                 Register
               </Link>
@@ -112,11 +112,12 @@ const Navbar = () => {
         {/* Mobile Toggle */}
         <button
           onClick={toggleMenu}
-          className={`lg:hidden w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${isScrolled ? 'bg-slate-100 text-slate-900' : 'bg-white/10 text-white'}`}
+          className={`lg:hidden w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${isScrolled || !isHomePage ? 'bg-slate-100 text-slate-900' : 'bg-white/10 text-white'}`}
         >
           {isMenuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
         </button>
       </div>
+
 
       {/* Mobile Menu */}
       <AnimatePresence>
