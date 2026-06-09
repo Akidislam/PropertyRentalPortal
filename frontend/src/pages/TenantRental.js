@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
-import { FaBed, FaBath, FaRulerCombined, FaMapMarkerAlt, FaMoneyBillWave, FaUser, FaEnvelope, FaPhone, FaSearch, FaLock } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaMoneyBillWave, FaUser, FaEnvelope, FaPhone, FaSearch, FaLock, FaBed, FaBath, FaRulerCombined } from 'react-icons/fa';
 import '../styles/tenantrental.css';
 import { useToast } from '../context/ToastContext';
 
@@ -21,22 +21,23 @@ const TenantRental = () => {
   });
   const { showToast } = useToast();
 
-  useEffect(() => {
-    const fetchProperties = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/api/properties/approved`);
-        setProperties(response.data);
-        setFilteredProperties(response.data);
-        setLoading(false);
-      } catch (err) {
-        setError('Failed to fetch properties');
-        showToast('error', 'Failed to fetch properties');
-        setLoading(false);
-      }
-    };
+  const fetchProperties = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/api/properties/approved`);
+      setProperties(response.data);
+      setFilteredProperties(response.data);
+      setLoading(false);
+    } catch (err) {
+      setError('Failed to fetch properties');
+      showToast('error', 'Failed to fetch properties');
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchProperties();
-  }, [showToast]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const filtered = properties.filter(property => {
@@ -48,6 +49,7 @@ const TenantRental = () => {
       }
     });
     setFilteredProperties(filtered);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm, searchBy, properties]);
 
   const handleRequestRent = (property) => {
@@ -95,7 +97,7 @@ const TenantRental = () => {
       };
 
       await axios.post(`${BASE_URL}/api/rentalrequests/create`, requestData);
-      
+
       showToast('success', 'Rental request submitted successfully!');
       setShowModal(false);
       setFormData({ name: '', email: '', phone: '' });
@@ -111,17 +113,17 @@ const TenantRental = () => {
   return (
     <div className="tenant-rental-container">
       <h2>Available Properties</h2>
-      
+
       <div className="search-section">
         <div className="search-container">
           <div className="search-type">
-            <button 
+            <button
               className={`search-type-btn ${searchBy === 'title' ? 'active' : ''}`}
               onClick={() => setSearchBy('title')}
             >
               Search by Title
             </button>
-            <button 
+            <button
               className={`search-type-btn ${searchBy === 'owner' ? 'active' : ''}`}
               onClick={() => setSearchBy('owner')}
             >
@@ -146,8 +148,8 @@ const TenantRental = () => {
           <div key={property._id} className="property-card">
             <div className="property-image">
               {property.images && property.images.length > 0 ? (
-                <img 
-                  src={`${BASE_URL}${property.images[0]}`} 
+                <img
+                  src={`${BASE_URL}${property.images[0]}`}
                   alt={property.title}
                   onError={(e) => {
                     e.target.onerror = null;
@@ -155,8 +157,8 @@ const TenantRental = () => {
                   }}
                 />
               ) : (
-                <img 
-                  src="https://via.placeholder.com/300x200?text=No+Image" 
+                <img
+                  src="https://via.placeholder.com/300x200?text=No+Image"
                   alt="No image available"
                 />
               )}
@@ -167,10 +169,10 @@ const TenantRental = () => {
                 </div>
               )}
             </div>
-            
+
             <div className="property-content">
               <h3>{property.title}</h3>
-              
+
               <div className="property-details">
                 <div className="detail-item">
                   <FaMoneyBillWave className="icon" />
@@ -279,4 +281,3 @@ const TenantRental = () => {
 };
 
 export default TenantRental;
-

@@ -17,10 +17,6 @@ const UpdateProfile = ({ onClose, onUpdate }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchUserData();
-  }, []);
-
   const fetchUserData = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -52,6 +48,11 @@ const UpdateProfile = ({ onClose, onUpdate }) => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -131,7 +132,7 @@ const UpdateProfile = ({ onClose, onUpdate }) => {
         <button className="close-button" onClick={handleClose}>
           <FaTimes />
         </button>
-        
+
         <div className="modal-header">
           <h2>Update Profile</h2>
         </div>
@@ -140,9 +141,9 @@ const UpdateProfile = ({ onClose, onUpdate }) => {
 
         <form onSubmit={handleSubmit}>
           <div className="profile-picture-preview">
-            <img 
-              src={previewUrl || '/default-profile.png'} 
-              alt="Profile Preview" 
+            <img
+              src={previewUrl || '/default-profile.png'}
+              alt="Profile Preview"
               className="preview-image"
             />
             <label className="file-input-label">
@@ -225,4 +226,4 @@ const UpdateProfile = ({ onClose, onUpdate }) => {
   );
 };
 
-export default UpdateProfile; 
+export default UpdateProfile;

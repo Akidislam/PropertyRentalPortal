@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { 
-  FaThLarge, FaPlus, FaUsers, FaWallet, FaHistory, 
-  FaStar, FaComments, FaSignOutAlt, FaHome,
-  FaCheckCircle, FaCreditCard, FaUserShield, FaInfoCircle, FaHeadset, FaPowerOff
+import {
+  FaThLarge, FaUsers, FaWallet, FaHistory,
+  FaStar, FaComments, FaHome, FaCreditCard, FaUserShield, FaInfoCircle, FaHeadset, FaPowerOff, FaPlus, FaCheckCircle
 } from 'react-icons/fa';
 
 const DashboardSidebar = ({ role, onLogout }) => {
@@ -49,17 +48,16 @@ const DashboardSidebar = ({ role, onLogout }) => {
     <div className="w-64 bg-slate-900 min-h-screen flex flex-col fixed left-0 top-0 z-40 pt-20 border-r border-white/5">
       <div className="flex-grow px-4 space-y-2 mt-4">
         <div className="px-4 mb-6">
-           <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Management</span>
+          <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Management</span>
         </div>
         {links.map((link) => (
           <Link
             key={link.path}
             to={link.path}
-            className={`flex items-center space-x-3 px-4 py-3.5 rounded-2xl font-bold text-sm transition-all duration-300 ${
-              location.pathname === link.path
+            className={`flex items-center space-x-3 px-4 py-3.5 rounded-2xl font-bold text-sm transition-all duration-300 ${location.pathname === link.path
                 ? 'bg-primary-600 text-white shadow-xl shadow-primary-600/20 translate-x-1'
                 : 'text-slate-400 hover:bg-white/5 hover:text-white hover:translate-x-1'
-            }`}
+              }`}
           >
             <span className={`text-lg ${location.pathname === link.path ? 'text-white' : 'text-primary-500'}`}>{link.icon}</span>
             <span>{link.name}</span>

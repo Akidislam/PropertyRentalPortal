@@ -16,34 +16,35 @@ const WalletHistory = () => {
   const { showToast } = useToast();
   const user = JSON.parse(localStorage.getItem('user'));
 
-  useEffect(() => {
-    const fetchWalletHistory = async () => {
-      try {
-        const userType = user.role === 'landlord' ? 'landlord' : 'tenant';
-        const res = await axios.get(
-          `${BASE_URL}/api/wallet-history/${user._id}/${userType}`,
-          { headers: { 'x-auth-token': localStorage.getItem('token') } }
-        );
+  const fetchWalletHistory = async () => {
+    try {
+      const userType = user.role === 'landlord' ? 'landlord' : 'tenant';
+      const res = await axios.get(
+        `${BASE_URL}/api/wallet-history/${user._id}/${userType}`,
+        { headers: { 'x-auth-token': localStorage.getItem('token') } }
+      );
 
-        if (res.data.success) {
-          setTransactions(res.data.data.transactions);
-          setTotals(res.data.data.totals);
-          setUserInfo(res.data.data.user);
-        }
-      } catch {
-        showToast('error', '🛑 Ledger synchronization failed.');
-      } finally {
-        setLoading(false);
+      if (res.data.success) {
+        setTransactions(res.data.data.transactions);
+        setTotals(res.data.data.totals);
+        setUserInfo(res.data.data.user);
       }
-    };
+    } catch {
+      showToast('error', '🛑 Ledger synchronization failed.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     if (!user) {
       showToast('error', '🛑 Authentication required. Please re-login.');
       window.location.href = '/login';
       return;
     }
     fetchWalletHistory();
-  }, [user, showToast]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getPaymentMethodIcon = (method) => {
     switch (method) {

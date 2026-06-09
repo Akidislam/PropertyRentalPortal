@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { FaHome, FaInfoCircle, FaHeadset, FaBuilding, FaComments, FaBars, FaTimes, FaUserCircle, FaSignOutAlt, FaRocket } from 'react-icons/fa';
+import { FaHome, FaInfoCircle, FaHeadset, FaComments, FaBars, FaTimes, FaRocket, FaBuilding, FaSignOutAlt } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
@@ -21,6 +21,7 @@ const Navbar = () => {
       clearInterval(timer);
       window.removeEventListener('scroll', handleScroll);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleLogout = () => {
@@ -60,9 +61,8 @@ const Navbar = () => {
             <Link
               key={link.path}
               to={link.path}
-              className={`flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.25em] transition-all duration-300 relative group ${
-                location.pathname === link.path ? 'text-primary-600' : 'text-slate-400 hover:text-slate-900'
-              }`}
+              className={`flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.25em] transition-all duration-300 relative group ${location.pathname === link.path ? 'text-primary-600' : 'text-slate-400 hover:text-slate-900'
+                }`}
             >
               <span className="text-[12px]">{link.icon}</span>
               <span>{link.name}</span>
@@ -76,17 +76,17 @@ const Navbar = () => {
           <div className="text-[9px] font-black text-slate-300 uppercase tracking-widest bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">
             {dateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </div>
-          
+
           {user || admin ? (
             <div className="flex items-center gap-3">
-              <Link 
+              <Link
                 to={admin ? "/admin-dashboard" : user.role === 'landlord' ? "/landlord-dashboard" : "/tenant-dashboard"}
                 className="btn-primary !py-2.5 !px-6 flex items-center gap-2"
               >
                 <FaRocket size={10} />
                 <span>Console</span>
               </Link>
-              <button 
+              <button
                 onClick={handleLogout}
                 className="w-10 h-10 rounded-xl bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-all duration-500 flex items-center justify-center shadow-sm"
                 title="Terminate Session"
@@ -96,8 +96,8 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="flex items-center gap-2">
-               <Link to="/login" className="btn-secondary !py-2.5 !px-6">Sign In</Link>
-               <Link to="/register" className="btn-primary !py-2.5 !px-6">Join</Link>
+              <Link to="/login" className="btn-secondary !py-2.5 !px-6">Sign In</Link>
+              <Link to="/register" className="btn-primary !py-2.5 !px-6">Join</Link>
             </div>
           )}
         </div>
@@ -127,7 +127,7 @@ const Navbar = () => {
                 >
                   <span className="text-xs font-black uppercase tracking-widest text-slate-900 group-hover:text-primary-600 transition-colors">{link.name}</span>
                   <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center text-slate-300 group-hover:bg-primary-50 group-hover:text-primary-600 transition-all">
-                     {link.icon}
+                    {link.icon}
                   </div>
                 </Link>
               ))}
@@ -152,8 +152,8 @@ const Navbar = () => {
                 </div>
               ) : (
                 <div className="grid grid-cols-2 gap-4">
-                   <Link to="/login" onClick={() => setIsMenuOpen(false)} className="btn-secondary flex items-center justify-center">Sign In</Link>
-                   <Link to="/register" onClick={() => setIsMenuOpen(false)} className="btn-primary flex items-center justify-center">Join</Link>
+                  <Link to="/login" onClick={() => setIsMenuOpen(false)} className="btn-secondary flex items-center justify-center">Sign In</Link>
+                  <Link to="/register" onClick={() => setIsMenuOpen(false)} className="btn-primary flex items-center justify-center">Join</Link>
                 </div>
               )}
             </div>

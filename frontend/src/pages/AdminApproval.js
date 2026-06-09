@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
 import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
-import { FaCheck, FaTimes, FaHome, FaUser, FaMapMarkerAlt, FaFileContract } from 'react-icons/fa';
+import { FaTimes, FaHome, FaUser, FaMapMarkerAlt, FaFileContract, FaCheck } from 'react-icons/fa';
 
 const AdminApproval = () => {
   const [properties, setProperties] = useState([]);
@@ -31,6 +31,7 @@ const AdminApproval = () => {
 
   useEffect(() => {
     fetchProperties();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleAction = async (id, status) => {
@@ -68,7 +69,7 @@ const AdminApproval = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex font-sans">
       <DashboardSidebar role="admin" onLogout={handleLogout} />
-      
+
       <main className="flex-grow ml-64 p-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -99,10 +100,10 @@ const AdminApproval = () => {
                     <tr>
                       <td colSpan="6" className="px-6 py-20 text-center">
                         <div className="flex flex-col items-center gap-2">
-                           <FaFileContract className="text-slate-100" size={40} />
-                           <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest">
-                             {loading ? 'Synchronizing Registry...' : 'No Assets Pending Verification'}
-                           </p>
+                          <FaFileContract className="text-slate-100" size={40} />
+                          <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest">
+                            {loading ? 'Synchronizing Registry...' : 'No Assets Pending Verification'}
+                          </p>
                         </div>
                       </td>
                     </tr>
@@ -155,13 +156,12 @@ const AdminApproval = () => {
                           <div className="text-[9px] font-bold text-slate-400 opacity-60">৳{property.advance} ADV</div>
                         </td>
                         <td className="px-6 py-5 text-center whitespace-nowrap">
-                          <span className={`inline-block px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-[0.2em] ${
-                            property.status === 'approved' 
-                              ? 'bg-green-50 text-green-600 border border-green-100' 
+                          <span className={`inline-block px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-[0.2em] ${property.status === 'approved'
+                              ? 'bg-green-50 text-green-600 border border-green-100'
                               : property.status === 'rejected'
-                              ? 'bg-red-50 text-red-600 border border-red-100'
-                              : 'bg-amber-50 text-amber-600 border border-amber-100 shadow-sm shadow-amber-600/5 animate-pulse'
-                          }`}>
+                                ? 'bg-red-50 text-red-600 border border-red-100'
+                                : 'bg-amber-50 text-amber-600 border border-amber-100 shadow-sm shadow-amber-600/5 animate-pulse'
+                            }`}>
                             {property.status || 'Pending'}
                           </span>
                         </td>

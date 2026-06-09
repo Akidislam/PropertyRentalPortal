@@ -15,25 +15,27 @@ const UserDetails = () => {
   const [loading, setLoading] = useState(true);
   const admin = JSON.parse(localStorage.getItem('admin'));
 
+  const fetchUsers = async () => {
+    try {
+      const adminToken = localStorage.getItem('adminToken');
+      setLoading(true);
+      const config = { headers: { Authorization: `Bearer ${adminToken}` } };
+      const res = await axios.get(`${BASE_URL}/api/admin/users`, config);
+      const allUsers = res.data;
+
+      setTenants(allUsers.filter(u => u.role === 'tenant'));
+      setLandlords(allUsers.filter(u => u.role === 'landlord'));
+    } catch { showToast('error', 'Data synchronization failed.'); }
+    finally { setLoading(false); }
+  };
+
   useEffect(() => {
     const adminToken = localStorage.getItem('adminToken');
     if (!admin || !adminToken) { showToast('error', 'Administrative clearance required.'); navigate('/admin'); return; }
 
-    const fetchUsers = async () => {
-      try {
-        setLoading(true);
-        const config = { headers: { Authorization: `Bearer ${adminToken}` } };
-        const res = await axios.get(`${BASE_URL}/api/admin/users`, config);
-        const allUsers = res.data;
-        
-        setTenants(allUsers.filter(u => u.role === 'tenant'));
-        setLandlords(allUsers.filter(u => u.role === 'landlord'));
-      } catch { showToast('error', 'Data synchronization failed.'); }
-      finally { setLoading(false); }
-    };
-
     fetchUsers();
-  }, [admin, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -49,8 +51,8 @@ const UserDetails = () => {
             {icon}
           </div>
           <div>
-             <h2 className="text-xl font-black text-slate-900 uppercase tracking-tighter">{title} Directory</h2>
-             <p className="text-[9px] font-black text-slate-300 uppercase tracking-widest mt-1">Registry of verified {title.toLowerCase()} accounts</p>
+            <h2 className="text-xl font-black text-slate-900 uppercase tracking-tighter">{title} Directory</h2>
+            <p className="text-[9px] font-black text-slate-300 uppercase tracking-widest mt-1">Registry of verified {title.toLowerCase()} accounts</p>
           </div>
         </div>
         <span className="bg-slate-100 text-slate-500 text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest">{data.length} Entities</span>
@@ -70,8 +72,8 @@ const UserDetails = () => {
             <tbody className="divide-y divide-slate-50">
               {data.length > 0 ? (
                 data.map((u) => (
-                  <tr 
-                    key={u._id} 
+                  <tr
+                    key={u._id}
                     onClick={() => navigate(`/user-details/${u._id}`)}
                     className="hover:bg-slate-50/50 transition-all group cursor-pointer"
                   >
@@ -86,7 +88,7 @@ const UserDetails = () => {
                         <div>
                           <div className="text-[11px] font-black text-slate-900 uppercase truncate max-w-[150px]">{u.name}</div>
                           <div className="text-[9px] text-slate-400 font-bold uppercase tracking-wider flex items-center gap-1 mt-1">
-                             <FaAddressCard size={10} className="text-primary-500" /> NID: {u.nid}
+                            <FaAddressCard size={10} className="text-primary-500" /> NID: {u.nid}
                           </div>
                         </div>
                       </div>
@@ -131,7 +133,7 @@ const UserDetails = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex font-sans">
       <DashboardSidebar role="admin" onLogout={handleLogout} />
-      
+
       <main className="flex-grow ml-64 p-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto">
           {/* Header */}

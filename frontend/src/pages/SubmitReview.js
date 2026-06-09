@@ -4,7 +4,7 @@ import { BASE_URL } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
-import { FaStar, FaUser, FaEnvelope, FaPhone, FaBuilding, FaMapMarkerAlt, FaCommentAlt, FaPenNib } from 'react-icons/fa';
+import { FaStar, FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaPenNib, FaBuilding } from 'react-icons/fa';
 
 const SubmitReview = () => {
   const navigate = useNavigate();
@@ -71,7 +71,7 @@ const SubmitReview = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 py-20 px-4 sm:px-6 lg:px-8">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="max-w-4xl mx-auto"
@@ -79,13 +79,13 @@ const SubmitReview = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-[2rem] bg-slate-900 text-white text-3xl mb-6 shadow-2xl">
-             <FaPenNib className="text-primary-500" />
+            <FaPenNib className="text-primary-500" />
           </div>
           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter uppercase mb-4">
-             Share Your <span className="text-primary-600">Narrative</span>
+            Share Your <span className="text-primary-600">Narrative</span>
           </h1>
           <p className="text-lg text-slate-500 font-medium max-w-xl mx-auto">
-             Your authentic feedback helps us maintain the gold standard of property rental excellence.
+            Your authentic feedback helps us maintain the gold standard of property rental excellence.
           </p>
         </div>
 
@@ -95,7 +95,7 @@ const SubmitReview = () => {
             {/* Identity Section */}
             <div className="space-y-8">
               <div className="flex items-center gap-3 border-b border-slate-50 pb-4">
-                 <span className="text-[10px] font-black text-primary-600 uppercase tracking-[0.3em]">01. Your Identity</span>
+                <span className="text-[10px] font-black text-primary-600 uppercase tracking-[0.3em]">01. Your Identity</span>
               </div>
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-2">
@@ -120,7 +120,7 @@ const SubmitReview = () => {
             {/* Property Section */}
             <div className="space-y-8">
               <div className="flex items-center gap-3 border-b border-slate-50 pb-4">
-                 <span className="text-[10px] font-black text-primary-600 uppercase tracking-[0.3em]">02. Asset Details</span>
+                <span className="text-[10px] font-black text-primary-600 uppercase tracking-[0.3em]">02. Asset Details</span>
               </div>
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-2">
@@ -145,7 +145,7 @@ const SubmitReview = () => {
             {/* Feedback Section */}
             <div className="space-y-8">
               <div className="flex items-center gap-3 border-b border-slate-50 pb-4">
-                 <span className="text-[10px] font-black text-primary-600 uppercase tracking-[0.3em]">03. Community Intelligence</span>
+                <span className="text-[10px] font-black text-primary-600 uppercase tracking-[0.3em]">03. Community Intelligence</span>
               </div>
 
               <div className="bg-slate-900 rounded-[2.5rem] p-10 text-center relative overflow-hidden">
@@ -153,8 +153,8 @@ const SubmitReview = () => {
                 <label className="block text-xs font-black text-primary-500 uppercase tracking-[0.2em] mb-6">Overall Rating</label>
                 <div className="flex justify-center gap-3 mb-4">
                   {[1, 2, 3, 4, 5].map((rating) => (
-                    <button key={rating} type="button" 
-                      onClick={() => setFormData(p => ({...p, rating}))}
+                    <button key={rating} type="button"
+                      onClick={() => setFormData(p => ({ ...p, rating }))}
                       onMouseEnter={() => setHoveredRating(rating)}
                       onMouseLeave={() => setHoveredRating(0)}
                       className="transition-all transform hover:scale-125 focus:outline-none"
@@ -195,4 +195,3 @@ const SubmitReview = () => {
 };
 
 export default SubmitReview;
- 

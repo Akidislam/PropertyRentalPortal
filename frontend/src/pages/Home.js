@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import { motion } from 'framer-motion';
-import { FaUserPlus, FaSearch, FaShieldAlt, FaChartLine, FaBuilding, FaChevronDown, FaMapMarkerAlt, FaHome, FaStar, FaSignInAlt } from 'react-icons/fa';
+import { FaUserPlus, FaSearch, FaShieldAlt, FaChartLine, FaStar, FaSignInAlt, FaBuilding } from 'react-icons/fa';
 import rental1 from '../assets/p1.jpg';
 import rental2 from '../assets/p2.jpg';
 import rental3 from '../assets/p3.jpg';
@@ -13,22 +13,24 @@ const Home = () => {
   const [totalProps, setTotalProps] = useState(0);
   const images = [rental1, rental2, rental3];
 
+  const fetchStats = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/api/properties/all`);
+      setTotalProps(res.data.length);
+    } catch (error) {
+      console.error('Error fetching home stats:', error);
+    }
+  };
+
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const res = await axios.get(`${BASE_URL}/api/properties/all`);
-        setTotalProps(res.data.length);
-      } catch (error) {
-        console.error('Error fetching home stats:', error);
-      }
-    };
     fetchStats();
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % images.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [images.length]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const features = [
     {
@@ -49,7 +51,7 @@ const Home = () => {
   ];
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -63,9 +65,9 @@ const Home = () => {
             <motion.div
               key={index}
               initial={{ opacity: 0, scale: 1.1 }}
-              animate={{ 
+              animate={{
                 opacity: currentSlide === index ? 1 : 0,
-                scale: currentSlide === index ? 1 : 1.1 
+                scale: currentSlide === index ? 1 : 1.1
               }}
               transition={{ duration: 1.5 }}
               className="absolute inset-0"
@@ -88,12 +90,12 @@ const Home = () => {
               <FaStar className="text-primary-500 text-[10px]" />
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary-100">Premium Rental Experience</span>
             </div>
-            
+
             <h1 className="text-5xl md:text-8xl font-black text-white mb-8 tracking-tighter leading-[0.9] uppercase">
               Explore Your <br />
               <span className="text-primary-500">Dream Sanctuary</span>
             </h1>
-            
+
             <p className="text-sm md:text-lg text-slate-300 mb-12 max-w-xl mx-auto font-medium leading-relaxed">
               Discover a curated collection of premium properties designed for the modern lifestyle. Secure, seamless, and sophisticated.
             </p>
@@ -101,14 +103,14 @@ const Home = () => {
             {/* Compact Auth Action Feature */}
             <div className="bg-white/10 backdrop-blur-md p-2 rounded-[2rem] border border-white/20 shadow-2xl max-w-sm mx-auto group mb-16">
               <div className="bg-white/10 rounded-[1.8rem] p-2 flex items-center gap-2">
-                  <Link to="/register" className="flex-1 px-6 py-4 bg-primary-600/90 hover:bg-primary-600 text-white font-black rounded-xl text-sm transition-all flex items-center justify-center gap-2 shadow-lg backdrop-blur-sm">
-                    <FaUserPlus />
-                    <span>Register</span>
-                  </Link>
-                  <Link to="/login" className="flex-1 px-6 py-4 bg-slate-900/80 hover:bg-slate-900 text-white font-black rounded-xl text-sm transition-all flex items-center justify-center gap-2 shadow-lg backdrop-blur-sm border border-white/10">
-                    <FaSignInAlt />
-                    <span>Login</span>
-                  </Link>
+                <Link to="/register" className="flex-1 px-6 py-4 bg-primary-600/90 hover:bg-primary-600 text-white font-black rounded-xl text-sm transition-all flex items-center justify-center gap-2 shadow-lg backdrop-blur-sm">
+                  <FaUserPlus />
+                  <span>Register</span>
+                </Link>
+                <Link to="/login" className="flex-1 px-6 py-4 bg-slate-900/80 hover:bg-slate-900 text-white font-black rounded-xl text-sm transition-all flex items-center justify-center gap-2 shadow-lg backdrop-blur-sm border border-white/10">
+                  <FaSignInAlt />
+                  <span>Login</span>
+                </Link>
               </div>
             </div>
           </motion.div>
@@ -116,18 +118,18 @@ const Home = () => {
 
         {/* Updated Floating Stats */}
         <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-full max-w-4xl px-6 hidden lg:flex justify-around items-center text-white/40">
-           <div className="flex items-center gap-4">
-              <span className="text-4xl font-black text-white">{totalProps}</span>
-              <span className="text-[10px] font-bold uppercase tracking-widest leading-tight">Verified <br/>Assets</span>
-           </div>
-           <div className="flex items-center gap-4">
-              <span className="text-4xl font-black text-white">Active</span>
-              <span className="text-[10px] font-bold uppercase tracking-widest leading-tight">Community <br/>Members</span>
-           </div>
-           <div className="flex items-center gap-4">
-              <span className="text-4xl font-black text-white">100%</span>
-              <span className="text-[10px] font-bold uppercase tracking-widest leading-tight">Secure <br/>Payments</span>
-           </div>
+          <div className="flex items-center gap-4">
+            <span className="text-4xl font-black text-white">{totalProps}</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest leading-tight">Verified <br />Assets</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-4xl font-black text-white">Active</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest leading-tight">Community <br />Members</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-4xl font-black text-white">100%</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest leading-tight">Secure <br />Payments</span>
+          </div>
         </div>
       </section>
 
@@ -164,21 +166,21 @@ const Home = () => {
 
       {/* Quick Action Section */}
       <section className="py-20 bg-slate-50">
-         <div className="container mx-auto px-6">
-            <div className="bg-slate-900 rounded-[3rem] p-12 md:p-20 relative overflow-hidden">
-               <div className="absolute top-0 right-0 w-96 h-96 bg-primary-600/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
-               <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
-                  <div className="max-w-xl">
-                     <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tighter uppercase leading-[0.9]">Ready to <br/><span className="text-primary-500">Upgrade</span> Your Life?</h2>
-                     <p className="text-sm text-slate-400 font-medium">Join thousands of others who have found their perfect living space through our platform.</p>
-                  </div>
-                  <div className="flex flex-col sm:flex-row gap-4">
-                     <Link to="/register" className="px-10 py-5 bg-primary-600 text-white font-black rounded-2xl text-lg hover:bg-primary-500 transition-all shadow-xl shadow-primary-600/20 active:scale-95">Create Account</Link>
-                     <Link to="/login" className="px-10 py-5 bg-white/10 text-white font-black rounded-2xl text-lg border border-white/20 hover:bg-white/20 transition-all active:scale-95">Sign In</Link>
-                  </div>
-               </div>
+        <div className="container mx-auto px-6">
+          <div className="bg-slate-900 rounded-[3rem] p-12 md:p-20 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-primary-600/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+              <div className="max-w-xl">
+                <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tighter uppercase leading-[0.9]">Ready to <br /><span className="text-primary-500">Upgrade</span> Your Life?</h2>
+                <p className="text-sm text-slate-400 font-medium">Join thousands of others who have found their perfect living space through our platform.</p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link to="/register" className="px-10 py-5 bg-primary-600 text-white font-black rounded-2xl text-lg hover:bg-primary-500 transition-all shadow-xl shadow-primary-600/20 active:scale-95">Create Account</Link>
+                <Link to="/login" className="px-10 py-5 bg-white/10 text-white font-black rounded-2xl text-lg border border-white/20 hover:bg-white/20 transition-all active:scale-95">Sign In</Link>
+              </div>
             </div>
-         </div>
+          </div>
+        </div>
       </section>
 
       {/* Footer */}

@@ -21,6 +21,31 @@ const AdminDashboard = () => {
   });
   const [loading, setLoading] = useState(true);
 
+  const fetchStats = async () => {
+    try {
+      const adminToken = localStorage.getItem('adminToken');
+      const config = { headers: { Authorization: `Bearer ${adminToken}` } };
+      const [usersRes, propsRes, rentalsRes, reviewsRes] = await Promise.all([
+        axios.get(`${BASE_URL}/api/admin/users`, config),
+        axios.get(`${BASE_URL}/api/properties/all`, config),
+        axios.get(`${BASE_URL}/api/admin/rentals`, config),
+        axios.get(`${BASE_URL}/api/reviews/all`, config)
+      ]);
+
+      setStats({
+        totalUsers: usersRes.data.length.toString(),
+        totalProperties: propsRes.data.length.toString(),
+        totalApplications: rentalsRes.data.data.length.toString(),
+        totalReviews: reviewsRes.data.length.toString()
+      });
+    } catch (error) {
+      console.error('Error fetching admin stats:', error);
+      showToast('error', '⚠️ Failed to synchronize network intelligence.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (!isAdminAuthenticated()) {
       showToast('error', '🛑 Access restricted. Administrative clearance required.');
@@ -28,32 +53,8 @@ const AdminDashboard = () => {
       return;
     }
 
-    const fetchStats = async () => {
-      try {
-        const adminToken = localStorage.getItem('adminToken');
-        const config = { headers: { Authorization: `Bearer ${adminToken}` } };
-        const [usersRes, propsRes, rentalsRes, reviewsRes] = await Promise.all([
-          axios.get(`${BASE_URL}/api/admin/users`, config),
-          axios.get(`${BASE_URL}/api/properties/all`, config),
-          axios.get(`${BASE_URL}/api/admin/rentals`, config),
-          axios.get(`${BASE_URL}/api/reviews/all`, config)
-        ]);
-
-        setStats({
-          totalUsers: usersRes.data.length.toString(),
-          totalProperties: propsRes.data.length.toString(),
-          totalApplications: rentalsRes.data.data.length.toString(),
-          totalReviews: reviewsRes.data.length.toString()
-        });
-      } catch (error) {
-        console.error('Error fetching admin stats:', error);
-        showToast('error', '⚠️ Failed to synchronize network intelligence.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchStats();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleLogout = () => {
@@ -81,7 +82,7 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex font-sans">
       <DashboardSidebar role="admin" onLogout={handleLogout} />
-      
+
       <main className="flex-grow ml-64 p-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -103,7 +104,7 @@ const AdminDashboard = () => {
                 className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 flex items-center gap-6 group hover:shadow-2xl transition-all duration-500"
               >
                 <div className={`w-14 h-14 ${stat.color.split(' ')[0]} rounded-2xl flex items-center justify-center text-xl transition-all duration-500 group-hover:scale-110`}>
-                   <div className={stat.color.split(' ')[1]}>{stat.icon}</div>
+                  <div className={stat.color.split(' ')[1]}>{stat.icon}</div>
                 </div>
                 <div>
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">{stat.title}</p>
@@ -115,10 +116,10 @@ const AdminDashboard = () => {
 
           {/* Operations Grid */}
           <div className="flex items-center gap-4 mb-8">
-             <h2 className="text-xl font-black text-slate-900 uppercase tracking-tight">System Infrastructure</h2>
-             <div className="h-px flex-grow bg-slate-100"></div>
+            <h2 className="text-xl font-black text-slate-900 uppercase tracking-tight">System Infrastructure</h2>
+            <div className="h-px flex-grow bg-slate-100"></div>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {adminActions.map((action, i) => (
               <motion.div
@@ -132,13 +133,13 @@ const AdminDashboard = () => {
                   {action.icon}
                 </div>
                 <div className="relative z-10">
-                   <h3 className="text-lg font-black text-slate-900 mb-2 uppercase tracking-tight group-hover:text-primary-600 transition-colors">{action.name}</h3>
-                   <p className="text-xs text-slate-500 font-medium leading-relaxed">{action.desc}</p>
+                  <h3 className="text-lg font-black text-slate-900 mb-2 uppercase tracking-tight group-hover:text-primary-600 transition-colors">{action.name}</h3>
+                  <p className="text-xs text-slate-500 font-medium leading-relaxed">{action.desc}</p>
                 </div>
               </motion.div>
             ))}
           </div>
-          
+
         </motion.div>
       </main>
     </div>

@@ -11,21 +11,22 @@ const ViewReviews = () => {
   const [loading, setLoading] = useState(true);
   const { showToast } = useToast();
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`${BASE_URL}/api/reviews/all?sortBy=${sortBy}`);
-        setReviews(response.data);
-      } catch (err) {
-        showToast('error', 'Failed to retrieve property testimonials');
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchReviews = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`${BASE_URL}/api/reviews/all?sortBy=${sortBy}`);
+      setReviews(response.data);
+    } catch (err) {
+      showToast('error', 'Failed to retrieve property testimonials');
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchReviews();
-  }, [sortBy, showToast]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortBy]);
 
   const renderStars = (rating) => {
     return (

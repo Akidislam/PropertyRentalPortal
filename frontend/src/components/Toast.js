@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaCheckCircle, FaExclamationCircle, FaInfoCircle, FaTimes, FaExclamationTriangle } from 'react-icons/fa';
+import { FaExclamationCircle, FaInfoCircle, FaTimes, FaExclamationTriangle, FaCheckCircle } from 'react-icons/fa';
 
 const Toast = ({ type, message, onClose, duration = 3000 }) => {
   useEffect(() => {
@@ -9,6 +9,7 @@ const Toast = ({ type, message, onClose, duration = 3000 }) => {
     }, duration);
 
     return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [duration, onClose]);
 
   const config = {
@@ -59,7 +60,7 @@ const Toast = ({ type, message, onClose, duration = 3000 }) => {
       >
         <FaTimes size={14} />
       </button>
-      
+
       {/* Progress Bar */}
       <motion.div
         initial={{ width: '100%' }}

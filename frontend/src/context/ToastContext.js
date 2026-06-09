@@ -18,10 +18,12 @@ export const ToastProvider = ({ children }) => {
   const showToast = useCallback((type, message, duration = 3000) => {
     const id = Date.now();
     setToasts((prev) => [...prev, { id, type, message, duration }]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const removeToast = useCallback((id) => {
     setToasts((prev) => prev.filter((toast) => toast.id !== id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

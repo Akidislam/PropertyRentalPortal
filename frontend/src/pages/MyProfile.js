@@ -14,21 +14,23 @@ const MyProfile = () => {
   const [loading, setLoading] = useState(true);
   const userRole = JSON.parse(localStorage.getItem('user'))?.role;
 
+  const fetchHistory = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const config = { headers: { Authorization: `Bearer ${token}` } };
+      const res = await axios.get(`${BASE_URL}/api/auth/history`, config);
+      setData(res.data);
+    } catch (err) {
+      showToast('error', 'Failed to fetch profile record.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchHistory = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const config = { headers: { Authorization: `Bearer ${token}` } };
-        const res = await axios.get(`${BASE_URL}/api/auth/history`, config);
-        setData(res.data);
-      } catch (err) {
-        showToast('error', 'Failed to fetch profile record.');
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchHistory();
-  }, [showToast]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -62,6 +64,7 @@ const MyProfile = () => {
                 src={user.profilePicture ? `${BASE_URL}${user.profilePicture}` : 'https://ui-avatars.com/api/?name=' + user.name + '&size=200'}
                 alt={user.name}
                 className="w-40 h-40 rounded-3xl object-cover ring-8 ring-slate-50 shadow-xl"
+                onError={e => { e.target.onerror = null; e.target.src = 'https://ui-avatars.com/api/?name=' + user.name + '&size=200'; }}
               />
               <div className="flex-grow">
                 <div className="flex items-center gap-4 mb-2">
@@ -111,6 +114,7 @@ const MyProfile = () => {
                           src={user.role === 'landlord' ? `${BASE_URL}${item.images[0]}` : `${BASE_URL}${item.propertyId?.images?.[0]}`}
                           alt="Asset"
                           className="w-20 h-20 rounded-2xl object-cover"
+                          onError={e => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/150?text=No+Image'; }}
                         />
                         <div className="flex-grow">
                           <h3 className="text-sm font-black text-slate-900 uppercase truncate">

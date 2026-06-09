@@ -17,10 +17,6 @@ const UserManagement = () => {
   const navigate = useNavigate();
   const { showToast } = useToast();
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
   const getConfig = () => ({
     headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` }
   });
@@ -31,6 +27,11 @@ const UserManagement = () => {
       .then((res) => { setUsers(res.data); setLoading(false); })
       .catch(() => { showToast('error', 'Failed to fetch users.'); setLoading(false); });
   };
+
+  useEffect(() => {
+    fetchUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleInputChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -89,7 +90,7 @@ const UserManagement = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex font-sans">
       <DashboardSidebar role="admin" onLogout={handleLogout} />
-      
+
       <main className="flex-grow ml-64 p-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto">
           {/* Header */}
@@ -179,12 +180,12 @@ const UserManagement = () => {
             <div key={role} className="mb-16">
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-4">
-                   <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight">{role}s</h3>
-                   <div className="h-px w-20 bg-slate-100"></div>
-                   <span className="text-[9px] font-black text-slate-300 uppercase tracking-widest">{groupedUsers[role]?.length || 0} Users</span>
+                  <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight">{role}s</h3>
+                  <div className="h-px w-20 bg-slate-100"></div>
+                  <span className="text-[9px] font-black text-slate-300 uppercase tracking-widest">{groupedUsers[role]?.length || 0} Users</span>
                 </div>
               </div>
-              
+
               <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left">

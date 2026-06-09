@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaUsers, FaEnvelope, FaPhone, FaCalendarAlt, FaUserCircle, FaSearch, FaFilter } from 'react-icons/fa';
+import { FaUsers, FaEnvelope, FaPhone, FaCalendarAlt, FaSearch, FaFilter, FaUserCircle } from 'react-icons/fa';
 import { useToast } from '../context/ToastContext';
 
 const AllUsers = () => {
@@ -12,21 +12,23 @@ const AllUsers = () => {
   const [roleFilter, setRoleFilter] = useState('all');
   const { showToast } = useToast();
 
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get(`${BASE_URL}/api/users/all`);
+      if (res.data) setUsers(res.data);
+    } catch { showToast('error', '🛑 Network error while accessing directory.'); }
+    finally { setLoading(false); }
+  };
+
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get(`${BASE_URL}/api/users/all`);
-        if (res.data) setUsers(res.data);
-      } catch { showToast('error', '🛑 Network error while accessing directory.'); }
-      finally { setLoading(false); }
-    };
     fetchUsers();
-  }, [showToast]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const filteredUsers = users.filter(u => {
     const matchesSearch = u.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          u.email.toLowerCase().includes(searchTerm.toLowerCase());
+      u.email.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesRole = roleFilter === 'all' || u.role === roleFilter;
     return matchesSearch && matchesRole;
   });
@@ -139,4 +141,3 @@ const AllUsers = () => {
 };
 
 export default AllUsers;
- 

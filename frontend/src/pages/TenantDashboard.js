@@ -7,7 +7,7 @@ import { useToast } from '../context/ToastContext';
 import UpdateProfile from '../components/UpdateProfile';
 import DashboardSidebar from '../components/DashboardSidebar';
 import {
-  FaHome, FaWallet, FaCreditCard, FaCheckCircle, FaHistory, FaStar, FaUserEdit, FaSearch, FaMapMarkerAlt, FaUser
+  FaHome, FaWallet, FaCreditCard, FaHistory, FaStar, FaUserEdit, FaSearch, FaMapMarkerAlt, FaUser, FaCheckCircle
 } from 'react-icons/fa';
 
 const TenantDashboard = () => {
@@ -62,6 +62,7 @@ const TenantDashboard = () => {
     } else {
       fetchUpdatedUser();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleLogout = () => {
@@ -102,7 +103,7 @@ const TenantDashboard = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex font-sans">
       <DashboardSidebar role="tenant" onLogout={handleLogout} />
-      
+
       <main className="flex-grow ml-64 p-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -115,22 +116,22 @@ const TenantDashboard = () => {
               <h1 className="text-3xl font-black text-slate-900 uppercase tracking-tighter">Tenant <span className="text-primary-600">Console</span></h1>
               <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mt-2">Lifestyle Analytics & Stay Management</p>
             </div>
-            
+
             <div className="bg-white p-2 pr-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4 hover:shadow-lg transition-all duration-500">
-               <div className="w-12 h-12 rounded-xl overflow-hidden ring-2 ring-slate-50">
-                  <img 
-                    src={user?.profilePicture ? `${BASE_URL}${user.profilePicture}` : 'https://ui-avatars.com/api/?name=' + user?.name + '&background=0ea5e9&color=fff'} 
-                    alt="Profile" 
-                    className="w-full h-full object-cover"
-                    onError={(e) => { e.target.src = 'https://ui-avatars.com/api/?name=' + user?.name + '&background=0ea5e9&color=fff'; }}
-                  />
-               </div>
-               <div className="text-left">
-                  <p className="text-sm font-black text-slate-900 truncate max-w-[150px]">{user?.name}</p>
-                  <button onClick={() => setShowUpdateProfile(true)} className="text-[10px] font-black text-primary-600 uppercase tracking-widest flex items-center gap-1 hover:text-primary-700 transition-colors mt-0.5">
-                     <FaUserEdit size={10} /> Update Profile
-                  </button>
-               </div>
+              <div className="w-12 h-12 rounded-xl overflow-hidden ring-2 ring-slate-50">
+                <img
+                  src={user?.profilePicture ? `${BASE_URL}${user.profilePicture}` : 'https://ui-avatars.com/api/?name=' + user?.name + '&background=0ea5e9&color=fff'}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                  onError={(e) => { e.target.src = 'https://ui-avatars.com/api/?name=' + user?.name + '&background=0ea5e9&color=fff'; }}
+                />
+              </div>
+              <div className="text-left">
+                <p className="text-sm font-black text-slate-900 truncate max-w-[150px]">{user?.name}</p>
+                <button onClick={() => setShowUpdateProfile(true)} className="text-[10px] font-black text-primary-600 uppercase tracking-widest flex items-center gap-1 hover:text-primary-700 transition-colors mt-0.5">
+                  <FaUserEdit size={10} /> Update Profile
+                </button>
+              </div>
             </div>
           </div>
 
@@ -143,7 +144,7 @@ const TenantDashboard = () => {
                 className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 flex items-center gap-6 group hover:shadow-2xl transition-all duration-500"
               >
                 <div className={`w-14 h-14 ${stat.color.split(' ')[0]} rounded-2xl flex items-center justify-center text-xl transition-all duration-500 group-hover:scale-110`}>
-                   <div className={stat.color.split(' ')[1]}>{stat.icon}</div>
+                  <div className={stat.color.split(' ')[1]}>{stat.icon}</div>
                 </div>
                 <div>
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">{stat.title}</p>
@@ -155,10 +156,10 @@ const TenantDashboard = () => {
 
           {/* Operations Grid */}
           <div className="flex items-center gap-4 mb-8">
-             <h2 className="text-xl font-black text-slate-900 uppercase tracking-tight">Navigation</h2>
-             <div className="h-px flex-grow bg-slate-100"></div>
+            <h2 className="text-xl font-black text-slate-900 uppercase tracking-tight">Navigation</h2>
+            <div className="h-px flex-grow bg-slate-100"></div>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {actionCards.map((action, i) => (
               <motion.div
@@ -172,8 +173,8 @@ const TenantDashboard = () => {
                   {action.icon}
                 </div>
                 <div className="relative z-10">
-                   <h3 className="text-lg font-black text-slate-900 mb-2 uppercase tracking-tight group-hover:text-primary-600 transition-colors">{action.name}</h3>
-                   <p className="text-xs text-slate-500 font-medium leading-relaxed">{action.desc}</p>
+                  <h3 className="text-lg font-black text-slate-900 mb-2 uppercase tracking-tight group-hover:text-primary-600 transition-colors">{action.name}</h3>
+                  <p className="text-xs text-slate-500 font-medium leading-relaxed">{action.desc}</p>
                 </div>
               </motion.div>
             ))}

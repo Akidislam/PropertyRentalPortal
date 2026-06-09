@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import { motion } from 'framer-motion';
-import { FaUser, FaHistory, FaHome, FaCreditCard, FaArrowLeft, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaHistory, FaHome, FaCreditCard, FaArrowLeft, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import { useToast } from '../context/ToastContext';
 import DashboardSidebar from '../components/DashboardSidebar';
 
@@ -14,20 +14,22 @@ const UserDetailsRecord = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const fetchHistory = async () => {
+    try {
+      const adminToken = localStorage.getItem('adminToken');
+      const config = { headers: { Authorization: `Bearer ${adminToken}` } };
+      const res = await axios.get(`${BASE_URL}/api/admin/users/${id}/history`, config);
+      setData(res.data);
+    } catch (err) {
+      showToast('error', 'Failed to fetch user record.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchHistory = async () => {
-      try {
-        const adminToken = localStorage.getItem('adminToken');
-        const config = { headers: { Authorization: `Bearer ${adminToken}` } };
-        const res = await axios.get(`${BASE_URL}/api/admin/users/${id}/history`, config);
-        setData(res.data);
-      } catch (err) {
-        showToast('error', 'Failed to fetch user record.');
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchHistory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const handleLogout = () => {
@@ -37,7 +39,7 @@ const UserDetailsRecord = () => {
 
   if (loading) return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-       <div className="w-12 h-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin"></div>
+      <div className="w-12 h-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin"></div>
     </div>
   );
 
@@ -48,7 +50,7 @@ const UserDetailsRecord = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex">
       <DashboardSidebar role="admin" onLogout={handleLogout} />
-      
+
       <main className="flex-grow ml-64 p-10">
         <button onClick={() => navigate(-1)} className="mb-8 flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary-600 transition-colors">
           <FaArrowLeft /> Return to Directory
@@ -62,6 +64,7 @@ const UserDetailsRecord = () => {
                 src={user.profilePicture ? `${BASE_URL}${user.profilePicture}` : 'https://ui-avatars.com/api/?name=' + user.name + '&size=200'}
                 alt={user.name}
                 className="w-40 h-40 rounded-3xl object-cover ring-8 ring-slate-50 shadow-xl"
+                onError={(e) => { e.target.src = 'https://ui-avatars.com/api/?name=' + user.name + '&size=200'; }}
               />
               <div className="flex-grow">
                 <div className="flex items-center gap-4 mb-2">
@@ -78,7 +81,7 @@ const UserDetailsRecord = () => {
                     <FaPhone className="text-slate-300" /> {user.phoneNumber}
                   </div>
                   <div className="flex items-center gap-3 text-slate-600 font-bold text-sm">
-                    <FaMapMarkerAlt className="text-slate-300" /> NID: {user.nid}
+                    <FaMapMarkerAlt className="text-slate-300" /> {user.role === 'landlord' ? 'Landlord' : 'Tenant'} ID
                   </div>
                   <div className="flex items-center gap-3 text-slate-600 font-bold text-sm">
                     <FaHistory className="text-slate-300" /> Joined {new Date(user.createdAt).toLocaleDateString()}
@@ -102,15 +105,16 @@ const UserDetailsRecord = () => {
                   </div>
                   <h2 className="text-lg font-black text-slate-900 uppercase tracking-tight">{user.role === 'landlord' ? 'Asset Portfolio' : 'Rental Requests'}</h2>
                 </div>
-                
+
                 <div className="space-y-4">
                   {(user.role === 'landlord' ? properties : rentalRequests).length > 0 ? (
                     (user.role === 'landlord' ? properties : rentalRequests).map((item) => (
                       <div key={item._id} className="bg-white p-6 rounded-3xl border border-slate-100 flex gap-4 hover:shadow-md transition-all group">
-                        <img 
-                          src={user.role === 'landlord' ? `${BASE_URL}${item.images[0]}` : `${BASE_URL}${item.propertyId?.images?.[0]}`}
+                        <img
+                          src={user.role === 'landlord' ? `${BASE_URL}${item.images?.[0]}` : `${BASE_URL}${item.propertyId?.images?.[0]}`}
                           alt="Asset"
                           className="w-20 h-20 rounded-2xl object-cover"
+                          onError={(e) => { e.target.src = 'https://via.placeholder.com/150'; }}
                         />
                         <div className="flex-grow">
                           <h3 className="text-sm font-black text-slate-900 uppercase truncate">

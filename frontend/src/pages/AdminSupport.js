@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaCheck, FaEnvelope, FaPhone, FaUser, FaComment, FaReply, FaTimes, FaHeadset, FaSearch, FaFilter, FaCalendarAlt, FaCheckCircle, FaRocket } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaUser, FaComment, FaTimes, FaHeadset, FaSearch, FaFilter, FaCalendarAlt, FaRocket, FaCheckCircle } from 'react-icons/fa';
 import { useToast } from '../context/ToastContext';
 import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
@@ -17,8 +17,6 @@ const AdminSupport = () => {
   const { showToast } = useToast();
   const navigate = useNavigate();
 
-  useEffect(() => { fetchTickets(); }, []);
-
   const fetchTickets = async () => {
     try {
       const res = await axios.get(`${BASE_URL}/api/support/tickets`, {
@@ -29,10 +27,15 @@ const AdminSupport = () => {
     finally { setLoading(false); }
   };
 
+  useEffect(() => {
+    fetchTickets();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleSubmitSolution = async (ticketId) => {
     if (!solution.trim()) { showToast('error', '🛑 Resolution narrative required.'); return; }
     try {
-      const res = await axios.put(`${BASE_URL}/api/support/tickets/${ticketId}`, 
+      const res = await axios.put(`${BASE_URL}/api/support/tickets/${ticketId}`,
         { solution: solution.trim() },
         { headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` } }
       );
@@ -51,8 +54,8 @@ const AdminSupport = () => {
 
   const filteredTickets = tickets.filter(t => {
     const matchesSearch = t.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          t.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          t.message.toLowerCase().includes(searchTerm.toLowerCase());
+      t.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      t.message.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'all' || t.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
@@ -102,9 +105,8 @@ const AdminSupport = () => {
                   >
                     <div className="absolute top-0 right-0 w-16 h-16 bg-slate-50 rounded-bl-[2rem] transition-all group-hover:bg-primary-50"></div>
                     <div className="flex items-center justify-between mb-8">
-                      <span className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-[0.2em] ${
-                        t.status === 'resolved' ? 'bg-green-50 text-green-700 border border-green-100' : 'bg-amber-50 text-amber-700 border border-amber-100'
-                      }`}>
+                      <span className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-[0.2em] ${t.status === 'resolved' ? 'bg-green-50 text-green-700 border border-green-100' : 'bg-amber-50 text-amber-700 border border-amber-100'
+                        }`}>
                         {t.status}
                       </span>
                       <div className="text-[9px] font-black text-slate-300 flex items-center gap-1 uppercase tracking-widest relative z-10">

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
-import { FaHeadset, FaEnvelope, FaPhone, FaUser, FaComment, FaPaperPlane, FaMapMarkerAlt, FaClock, FaCheckCircle, FaInfoCircle } from 'react-icons/fa';
+import { FaHeadset, FaEnvelope, FaPhone, FaUser, FaComment, FaPaperPlane, FaMapMarkerAlt, FaInfoCircle } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
 

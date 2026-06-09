@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import { motion } from 'framer-motion';
-import { FaTrash, FaSearch, FaSort, FaStar, FaBuilding, FaQuoteLeft, FaComments } from 'react-icons/fa';
+import { FaTrash, FaSearch, FaSort, FaStar, FaQuoteLeft, FaComments, FaBuilding } from 'react-icons/fa';
 import { useToast } from '../context/ToastContext';
 import { useNavigate } from 'react-router-dom';
 import DashboardSidebar from '../components/DashboardSidebar';
@@ -15,8 +15,6 @@ const AdminReview = () => {
   const { showToast } = useToast();
   const navigate = useNavigate();
 
-  useEffect(() => { fetchReviews(); }, [sortBy, searchTerm]);
-
   const fetchReviews = async () => {
     try {
       setLoading(true);
@@ -28,6 +26,11 @@ const AdminReview = () => {
     } catch { showToast('error', '🛑 Intelligence retrieval failed.'); }
     finally { setLoading(false); }
   };
+
+  useEffect(() => {
+    fetchReviews();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleDelete = async (reviewId) => {
     if (!window.confirm('Execute narrative deletion?')) return;
@@ -103,8 +106,8 @@ const AdminReview = () => {
                     <tr>
                       <td colSpan="5" className="px-6 py-20 text-center">
                         <div className="flex flex-col items-center gap-2">
-                           <FaComments className="text-slate-100" size={40} />
-                           <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest">{loading ? 'Synthesizing...' : 'No Narrative Data Available'}</p>
+                          <FaComments className="text-slate-100" size={40} />
+                          <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest">{loading ? 'Synthesizing...' : 'No Narrative Data Available'}</p>
                         </div>
                       </td>
                     </tr>

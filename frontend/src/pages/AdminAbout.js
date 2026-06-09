@@ -3,7 +3,7 @@ import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram, FaPlus, FaTimes, FaInfoCircle, FaBullseye, FaLightbulb, FaRocket, FaUsers, FaEnvelope } from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram, FaTimes, FaInfoCircle, FaBullseye, FaLightbulb, FaRocket, FaUsers, FaEnvelope, FaPlus } from 'react-icons/fa';
 import { isAdminAuthenticated } from '../utils/adminAuth';
 import { useToast } from '../context/ToastContext';
 import DashboardSidebar from '../components/DashboardSidebar';
@@ -32,15 +32,6 @@ const AdminAbout = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [newFeature, setNewFeature] = useState('');
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (!isAdminAuthenticated()) {
-      showToast('error', 'Please login to access admin features');
-      navigate('/admin');
-      return;
-    }
-    fetchAboutContent();
-  }, [navigate]);
 
   const fetchAboutContent = async () => {
     try {
@@ -74,6 +65,16 @@ const AdminAbout = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!isAdminAuthenticated()) {
+      showToast('error', 'Please login to access admin features');
+      navigate('/admin');
+      return;
+    }
+    fetchAboutContent();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -158,7 +159,7 @@ const AdminAbout = () => {
               <h1 className="text-3xl font-bold text-slate-900">System Information</h1>
               <p className="text-slate-500 mt-1 font-medium">Manage public About page content</p>
             </div>
-            <button 
+            <button
               onClick={handleSubmit}
               className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-8 rounded-2xl transition-all shadow-lg shadow-primary-600/20 active:scale-[0.98]"
             >
@@ -178,12 +179,12 @@ const AdminAbout = () => {
               <div className="grid grid-cols-1 gap-6">
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">Page Title</label>
-                  <input type="text" name="title" value={formData.title} onChange={handleChange} required 
+                  <input type="text" name="title" value={formData.title} onChange={handleChange} required
                     className="w-full px-6 py-3.5 rounded-2xl border border-slate-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/5 outline-none transition-all font-medium" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">Sub-headline / Quote</label>
-                  <input type="text" name="subquote" value={formData.subquote} onChange={handleChange} required 
+                  <input type="text" name="subquote" value={formData.subquote} onChange={handleChange} required
                     className="w-full px-6 py-3.5 rounded-2xl border border-slate-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/5 outline-none transition-all text-slate-600" />
                 </div>
               </div>
@@ -198,7 +199,7 @@ const AdminAbout = () => {
                   </div>
                   <h2 className="text-xl font-bold text-slate-900">Our Mission</h2>
                 </div>
-                <textarea name="mission" value={formData.mission} onChange={handleChange} required 
+                <textarea name="mission" value={formData.mission} onChange={handleChange} required
                   className="w-full h-40 px-6 py-5 rounded-[2rem] border border-slate-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/5 outline-none transition-all resize-none text-slate-600 leading-relaxed" />
               </div>
 
@@ -209,7 +210,7 @@ const AdminAbout = () => {
                   </div>
                   <h2 className="text-xl font-bold text-slate-900">Our Vision</h2>
                 </div>
-                <textarea name="vision" value={formData.vision} onChange={handleChange} required 
+                <textarea name="vision" value={formData.vision} onChange={handleChange} required
                   className="w-full h-40 px-6 py-5 rounded-[2rem] border border-slate-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/5 outline-none transition-all resize-none text-slate-600 leading-relaxed" />
               </div>
             </div>
@@ -223,7 +224,7 @@ const AdminAbout = () => {
                 <h2 className="text-xl font-bold text-slate-900">Key Features</h2>
               </div>
               <div className="flex gap-3 mb-6">
-                <input type="text" value={newFeature} onChange={(e) => setNewFeature(e.target.value)} placeholder="Add a new feature tag..." 
+                <input type="text" value={newFeature} onChange={(e) => setNewFeature(e.target.value)} placeholder="Add a new feature tag..."
                   className="flex-grow px-6 py-3.5 rounded-2xl border border-slate-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/5 outline-none transition-all" />
                 <button type="button" onClick={handleAddFeature} className="bg-slate-900 text-white font-bold px-8 rounded-2xl hover:bg-slate-800 transition-all flex items-center gap-2">
                   <FaPlus /> Add
@@ -252,12 +253,12 @@ const AdminAbout = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">For Tenants</label>
-                  <textarea name="forTenant" value={formData.forTenant} onChange={handleChange} required 
+                  <textarea name="forTenant" value={formData.forTenant} onChange={handleChange} required
                     className="w-full h-32 px-6 py-4 rounded-[1.5rem] border border-slate-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/5 outline-none transition-all resize-none text-sm text-slate-600" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">For Landlords</label>
-                  <textarea name="forLandlord" value={formData.forLandlord} onChange={handleChange} required 
+                  <textarea name="forLandlord" value={formData.forLandlord} onChange={handleChange} required
                     className="w-full h-32 px-6 py-4 rounded-[1.5rem] border border-slate-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/5 outline-none transition-all resize-none text-sm text-slate-600" />
                 </div>
               </div>
@@ -274,28 +275,28 @@ const AdminAbout = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">Contact Summary</label>
-                  <textarea name="contact" value={formData.contact} onChange={handleChange} required 
+                  <textarea name="contact" value={formData.contact} onChange={handleChange} required
                     className="w-full h-full min-h-[150px] px-6 py-4 rounded-[1.5rem] border border-slate-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-500/5 outline-none transition-all resize-none text-sm text-slate-600" />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2"><FaFacebook className="text-blue-600" /> Facebook</label>
-                    <input type="url" name="socialLinks.facebook" value={formData.socialLinks.facebook} onChange={handleChange} 
+                    <input type="url" name="socialLinks.facebook" value={formData.socialLinks.facebook} onChange={handleChange}
                       className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary-500 outline-none transition-all" />
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2"><FaTwitter className="text-sky-400" /> Twitter</label>
-                    <input type="url" name="socialLinks.twitter" value={formData.socialLinks.twitter} onChange={handleChange} 
+                    <input type="url" name="socialLinks.twitter" value={formData.socialLinks.twitter} onChange={handleChange}
                       className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary-500 outline-none transition-all" />
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2"><FaLinkedin className="text-blue-700" /> LinkedIn</label>
-                    <input type="url" name="socialLinks.linkedin" value={formData.socialLinks.linkedin} onChange={handleChange} 
+                    <input type="url" name="socialLinks.linkedin" value={formData.socialLinks.linkedin} onChange={handleChange}
                       className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary-500 outline-none transition-all" />
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2"><FaInstagram className="text-pink-600" /> Instagram</label>
-                    <input type="url" name="socialLinks.instagram" value={formData.socialLinks.instagram} onChange={handleChange} 
+                    <input type="url" name="socialLinks.instagram" value={formData.socialLinks.instagram} onChange={handleChange}
                       className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary-500 outline-none transition-all" />
                   </div>
                 </div>
@@ -308,5 +309,4 @@ const AdminAbout = () => {
   );
 };
 
-export default AdminAbout; 
- 
+export default AdminAbout;

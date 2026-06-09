@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
-import { FaSignInAlt, FaEnvelope, FaLock, FaUserShield, FaBuilding, FaArrowRight, FaCheckCircle } from 'react-icons/fa';
+import { FaSignInAlt, FaEnvelope, FaLock, FaUserShield, FaArrowRight, FaBuilding, FaCheckCircle } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
 import p7 from '../assets/p7.jpg';
@@ -125,8 +125,8 @@ const Login = () => {
                     type="button"
                     onClick={() => setFormData({ ...formData, role })}
                     className={`flex-1 py-3 rounded-xl text-sm font-black capitalize transition-all duration-300 border-2 ${formData.role === role
-                        ? 'bg-primary-600 border-primary-600 text-white shadow-lg shadow-primary-600/30'
-                        : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-500'
+                      ? 'bg-primary-600 border-primary-600 text-white shadow-lg shadow-primary-600/30'
+                      : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-500'
                       }`}
                   >
                     <div className="flex items-center justify-center gap-2">
@@ -212,8 +212,8 @@ const Login = () => {
               type="submit"
               disabled={loading || !isVerified}
               className={`w-full py-4 font-black text-sm uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-xl active:scale-95 mt-8 ${isVerified
-                  ? 'bg-slate-900 hover:bg-slate-800 text-white shadow-slate-900/20'
-                  : 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-none'
+                ? 'bg-slate-900 hover:bg-slate-800 text-white shadow-slate-900/20'
+                : 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-none'
                 }`}
             >
               {loading ? (

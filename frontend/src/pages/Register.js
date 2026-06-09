@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../utils/api';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaUser, FaEnvelope, FaLock, FaCalendarAlt, FaIdCard, FaPhone, FaUserShield, FaArrowRight, FaCheckCircle, FaBuilding } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaLock, FaCalendarAlt, FaIdCard, FaPhone, FaUserShield, FaArrowRight, FaBuilding, FaCheckCircle } from 'react-icons/fa';
 import { useToast } from '../context/ToastContext';
 import { Link } from 'react-router-dom';
 import p4 from '../assets/p4.jpg';
@@ -96,7 +96,7 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex bg-white">
-      
+
       {/* Left Side - Form Area */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 md:p-16 overflow-y-auto">
         <motion.div
@@ -140,11 +140,10 @@ const Register = () => {
                         key={role}
                         type="button"
                         onClick={() => setFormData({ ...formData, role })}
-                        className={`flex-1 py-3 rounded-xl text-sm font-black capitalize transition-all duration-300 border-2 ${
-                          formData.role === role 
-                            ? 'bg-primary-600 border-primary-600 text-white shadow-lg shadow-primary-600/30' 
+                        className={`flex-1 py-3 rounded-xl text-sm font-black capitalize transition-all duration-300 border-2 ${formData.role === role
+                            ? 'bg-primary-600 border-primary-600 text-white shadow-lg shadow-primary-600/30'
                             : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-500'
-                        }`}
+                          }`}
                       >
                         <div className="flex items-center justify-center gap-2">
                           <FaUserShield className="text-base" />
@@ -211,7 +210,7 @@ const Register = () => {
                     {passwordStrength && (
                       <div className="px-1 pt-1.5">
                         <div className="h-1 w-full bg-slate-200 rounded-full overflow-hidden">
-                          <motion.div 
+                          <motion.div
                             initial={{ width: 0 }}
                             animate={{ width: strengthConfig[passwordStrength].width }}
                             className={`h-full ${strengthConfig[passwordStrength].color} transition-all duration-300`}
@@ -304,7 +303,7 @@ const Register = () => {
                     <FaEnvelope />
                   </div>
                   <h3 className="text-2xl font-bold text-slate-900">Verify Your Email</h3>
-                  <p className="text-slate-500 mt-2">We've sent a 6-digit verification code to <br/><span className="font-bold text-slate-700">{formData.email}</span></p>
+                  <p className="text-slate-500 mt-2">We've sent a 6-digit verification code to <br /><span className="font-bold text-slate-700">{formData.email}</span></p>
                 </div>
 
                 <div className="max-w-xs mx-auto">
@@ -333,8 +332,8 @@ const Register = () => {
                       </>
                     )}
                   </button>
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     onClick={() => setShowOtpField(false)}
                     className="text-slate-500 hover:text-slate-700 text-xs font-bold transition-colors uppercase tracking-widest mt-4"
                   >
@@ -353,34 +352,34 @@ const Register = () => {
               </Link>
             </p>
           </div>
-          
+
           <div className="mt-6 text-center lg:text-left">
-             <Link to="/" className="text-slate-400 hover:text-slate-600 text-xs font-bold transition-colors inline-flex items-center gap-2 uppercase tracking-widest">
-               ← Return to Home
-             </Link>
+            <Link to="/" className="text-slate-400 hover:text-slate-600 text-xs font-bold transition-colors inline-flex items-center gap-2 uppercase tracking-widest">
+              ← Return to Home
+            </Link>
           </div>
         </motion.div>
       </div>
 
       {/* Right Side - Image/Branding (Hidden on mobile) */}
       <div className="hidden lg:flex w-1/2 relative overflow-hidden bg-slate-900">
-        <img 
-          src={p4} 
-          alt="Luxury Property" 
+        <img
+          src={p4}
+          alt="Luxury Property"
           className="absolute inset-0 w-full h-full object-cover opacity-60"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        
+
         <div className="relative z-10 flex flex-col justify-between h-full p-16 w-full text-right">
           <div className="flex justify-end">
-             <Link to="/" className="flex items-center gap-3">
-               <span className="text-2xl font-black text-white tracking-tighter uppercase italic">
-                 Property<span className="text-primary-500">Wave</span>
-               </span>
-               <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary-200">
-                 <FaBuilding className="text-white text-lg" />
-               </div>
-             </Link>
+            <Link to="/" className="flex items-center gap-3">
+              <span className="text-2xl font-black text-white tracking-tighter uppercase italic">
+                Property<span className="text-primary-500">Wave</span>
+              </span>
+              <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary-200">
+                <FaBuilding className="text-white text-lg" />
+              </div>
+            </Link>
           </div>
 
           <div className="text-right">
