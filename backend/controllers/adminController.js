@@ -1,12 +1,26 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
-const Property = require('../models/Property');  // Assuming your Property schema is in models/Property.js
- // Assuming User schema is in models/User.js
+const Property = require('../models/Property');
+const RentalRequest = require('../models/RentalRequest');
+const PaymentHistory = require('../models/PaymentHistory');
 const nodemailer = require('nodemailer');
 
-
-
-// Admin Login
+// Get all rental requests (active rentals)
+exports.getAllRentalRequests = async (req, res) => {
+  try {
+    const rentals = await RentalRequest.find()
+      .populate('propertyId', 'title location price advance images')
+      .sort({ createdAt: -1 });
+      
+    res.status(200).json({
+      success: true,
+      data: rentals
+    });
+  } catch (error) {
+    console.error('Error fetching admin rentals:', error);
+    res.status(500).json({ success: false, message: 'Server Error', error: error.message });
+  }
+};
 
 exports.adminLogin = async (req, res) => {
   const { username, password } = req.body;
@@ -21,6 +35,7 @@ exports.adminLogin = async (req, res) => {
     return res.status(401).json({ msg: 'Invalid credentials' });
   }
 };
+
 // Get All Users
 exports.getAllUsers = async (req, res) => {
   try {
@@ -30,7 +45,6 @@ exports.getAllUsers = async (req, res) => {
     res.status(500).json({ msg: 'Server Error', error });
   }
 };
-
 
 // Create a new user
 exports.createUser = async (req, res) => {
@@ -65,21 +79,46 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
+// Get User History (Full record for profile)
+exports.getUserHistory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id, '-password');
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    let history = {
+      user,
+      properties: [],
+      rentalRequests: [],
+      payments: []
+    };
+
+    if (user.role === 'landlord') {
+      history.properties = await Property.find({ uploaderEmail: user.email.toLowerCase() });
+      history.rentalRequests = await RentalRequest.find({ landlordEmail: user.email.toLowerCase() })
+        .populate('propertyId', 'title location images');
+      history.payments = await PaymentHistory.find({ landlordId: user._id })
+        .populate('propertyId', 'title')
+        .populate('tenantId', 'name email');
+    } else {
+      history.rentalRequests = await RentalRequest.find({ tenantEmail: user.email.toLowerCase() })
+        .populate('propertyId', 'title location images');
+      history.payments = await PaymentHistory.find({ tenantId: user._id })
+        .populate('propertyId', 'title')
+        .populate('landlordId', 'name email');
+    }
+
+    res.status(200).json(history);
+  } catch (error) {
+    console.error('Error fetching user history:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 
 // GET all properties for approval
 exports.getAllProperties = async (req, res) => {
   try {
-    // Get all properties with pending status by default
-    const properties = await Property.find({ status: 'pending' })
-      .sort({ createdAt: -1 });
-    
-    if (!properties || properties.length === 0) {
-      return res.status(200).json({ 
-        properties: [],
-        message: 'No pending properties found'
-      });
-    }
-
+    const properties = await Property.find({ status: 'pending' }).sort({ createdAt: -1 });
     res.status(200).json(properties);
   } catch (err) {
     console.error('Error fetching properties:', err);
@@ -93,7 +132,6 @@ exports.approveOrDeclineProperty = async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Validate status
     if (!['approved', 'rejected'].includes(status)) {
       return res.status(400).json({ message: 'Invalid status. Must be either approved or rejected' });
     }
@@ -103,51 +141,29 @@ exports.approveOrDeclineProperty = async (req, res) => {
       return res.status(404).json({ message: 'Property not found' });
     }
 
-    // Update property status
     property.status = status;
     await property.save();
 
-    // Email notification
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USER || 'wavedev13@gmail.com',
-        pass: process.env.EMAIL_PASS || 'dnrf axht vtvv bweg'
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
       }
     });
 
     const mailOptions = {
-      from: process.env.EMAIL_USER || 'wavedev13@gmail.com',
+      from: process.env.EMAIL_USER,
       to: property.uploaderEmail,
       subject: `Property ${status} - ${property.title}`,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #2e7d32;">Property ${status}</h2>
-          <p>Hello ${property.uploaderName},</p>
-          <p>Your property listing has been ${status.toLowerCase()} by the admin.</p>
-          <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; margin: 20px 0;">
-            <h3 style="margin-top: 0;">Property Details:</h3>
-            <p><strong>Title:</strong> ${property.title}</p>
-            <p><strong>Type:</strong> ${property.type}</p>
-            <p><strong>Location:</strong> ${property.location}</p>
-            <p><strong>Price:</strong> ৳${property.price}</p>
-          </div>
-          ${status === 'approved' ? `
-            <p>Your property is now visible to potential renters.</p>
-          ` : `
-            <p>If you have any questions about this decision, please contact our support team.</p>
-          `}
-          <p>Thanks,<br/>PropertyWave Team</p>
-        </div>
-      `
+      html: `<h3>Hello ${property.uploaderName},</h3>
+             <p>Your property listing has been <b>${status}</b> by the admin.</p>`
     };
 
     try {
       await transporter.sendMail(mailOptions);
-      console.log('Email notification sent successfully');
     } catch (emailError) {
       console.error('Error sending email:', emailError);
-      // Don't fail the request if email fails
     }
 
     res.status(200).json({ 

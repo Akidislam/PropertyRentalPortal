@@ -11,6 +11,7 @@ router.post('/register', authController.register);
 router.post('/verify-otp', authController.verifyOTP);
 router.post('/login', authController.login);
 router.get('/user-info', auth, authController.getUserInfo);
+router.get('/history', auth, authController.getUserHistory);
 
 // Profile routes
 router.get('/profile', auth, async (req, res) => {

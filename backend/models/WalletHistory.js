@@ -45,6 +45,5 @@ const walletHistorySchema = new mongoose.Schema({
 
 // Add indexes for faster queries
 walletHistorySchema.index({ userId: 1, createdAt: -1 });
-walletHistorySchema.index({ transactionId: 1 }, { unique: true });
 
 module.exports = mongoose.model('WalletHistory', walletHistorySchema); 

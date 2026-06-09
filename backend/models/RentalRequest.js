@@ -50,8 +50,7 @@ const rentalRequestSchema = new mongoose.Schema({
     required: true
   },
   propertyPhone: {
-    type: String,
-    required: true
+    type: String
   },
   propertyImages: [{
     type: String

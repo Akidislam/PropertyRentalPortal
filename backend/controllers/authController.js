@@ -2,6 +2,9 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const RentalRequest = require('../models/RentalRequest');
+const Property = require('../models/Property');
+const PaymentHistory = require('../models/PaymentHistory');
 
 let otpStore = {}; // In-memory OTP store (email => { otp, userData, expiresAt })
 
@@ -14,15 +17,55 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+// Get user history for personal profile
+exports.getUserHistory = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id, '-password');
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    let history = {
+      user,
+      properties: [],
+      rentalRequests: [],
+      payments: []
+    };
+
+    if (user.role === 'landlord') {
+      history.properties = await Property.find({ uploaderEmail: user.email.toLowerCase() });
+      history.rentalRequests = await RentalRequest.find({ landlordEmail: user.email.toLowerCase() })
+        .populate('propertyId', 'title location images');
+      history.payments = await PaymentHistory.find({ landlordId: user._id })
+        .populate('propertyId', 'title')
+        .populate('tenantId', 'name email');
+    } else {
+      history.rentalRequests = await RentalRequest.find({ tenantEmail: user.email.toLowerCase() })
+        .populate('propertyId', 'title location images');
+      history.payments = await PaymentHistory.find({ tenantId: user._id })
+        .populate('propertyId', 'title')
+        .populate('landlordId', 'name email');
+    }
+
+    res.status(200).json(history);
+  } catch (error) {
+    console.error('Error fetching personal history:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 // Step 1: Send OTP
 exports.register = async (req, res) => {
   const { name, email, password, birthDate, nid, phoneNumber, role } = req.body;
+  console.log('Registration attempt for:', email);
 
   try {
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ msg: 'User already exists' });
+    if (existingUser) {
+      console.log('User already exists:', email);
+      return res.status(400).json({ msg: 'User already exists' });
+    }
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    console.log('Generated OTP for', email, ':', otp);
 
     otpStore[email] = {
       otp,
@@ -30,6 +73,7 @@ exports.register = async (req, res) => {
       userData: { name, email, password, birthDate, nid, phoneNumber, role }
     };
 
+    console.log('Attempting to send email to:', email);
     await transporter.sendMail({
       from: `"PropertyWave" <${process.env.EMAIL_USER}>`,
       to: email,
@@ -38,11 +82,12 @@ exports.register = async (req, res) => {
              <p>Your OTP is: <b>${otp}</b></p>
              <p>It is valid for 10 minutes.</p>`
     });
+    console.log('Email sent successfully to:', email);
 
     res.status(200).json({ msg: 'OTP sent to email' });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ msg: 'Error sending OTP' });
+    console.error('Error in register/OTP:', err);
+    res.status(500).json({ msg: 'Error sending OTP: ' + err.message });
   }
 };
 
@@ -82,8 +127,8 @@ exports.verifyOTP = async (req, res) => {
 
     res.status(201).json({ msg: '🎉 Successfully Registered!' });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ msg: 'Error verifying and saving user' });
+    console.error('Error in verifyOTP/save:', err);
+    res.status(500).json({ msg: 'Error verifying and saving user: ' + err.message });
   }
 };
 
@@ -175,7 +220,7 @@ exports.updateWalletCoin = async (req, res) => {
 // Update user profile
 exports.updateProfile = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user._id;
     const { name, phoneNumber, password } = req.body;
     
     // Find user
@@ -213,7 +258,7 @@ exports.updateProfile = async (req, res) => {
 // Get user profile
 exports.getProfile = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user._id;
     const user = await User.findById(userId).select('-password');
     
     if (!user) {

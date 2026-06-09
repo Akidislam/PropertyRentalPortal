@@ -1,6 +1,7 @@
 const RentalRequest = require('../models/RentalRequest');
 const Property = require('../models/Property');
 const User = require('../models/User');
+const PaymentHistory = require('../models/PaymentHistory');
 
 // Create new rental request (tenant)
 exports.createRentalRequest = async (req, res) => {
@@ -28,6 +29,10 @@ exports.createRentalRequest = async (req, res) => {
     } = req.body;
 
     // Validate tenant email exists in database
+    if (!tenantEmail) {
+      return res.status(400).json({ message: 'Tenant email is required' });
+    }
+
     const tenant = await User.findOne({ email: tenantEmail.toLowerCase() });
     if (!tenant) {
       return res.status(400).json({ message: 'Tenant email not found in our system' });
@@ -223,8 +228,17 @@ exports.approveRentalRequest = async (req, res) => {
       return res.status(400).json({ message: 'This property is already rented' });
     }
 
+    // Lookup users to get their IDs for payment history
+    const tenant = await User.findOne({ email: request.tenantEmail.toLowerCase() });
+    const landlord = await User.findOne({ email: request.landlordEmail.toLowerCase() });
+
+    if (!tenant || !landlord) {
+      return res.status(404).json({ message: 'Tenant or landlord record not found in system' });
+    }
+
     // Update request status
     request.status = 'Approved';
+    request.hasAdvanceRequest = true; // Automatically trigger advance payment flow
     await request.save();
 
     // Update property status
@@ -234,8 +248,21 @@ exports.approveRentalRequest = async (req, res) => {
       await property.save();
     }
 
+    // Create automatic advance payment record
+    const advancePayment = new PaymentHistory({
+      rentalRequestId: request._id,
+      propertyId: request.propertyId._id,
+      tenantId: tenant._id,
+      landlordId: landlord._id,
+      amount: request.propertyAdvance || request.propertyId.advance || 0,
+      type: 'advance',
+      status: 'pending'
+    });
+
+    await advancePayment.save();
+
     res.status(200).json({ 
-      message: 'Rental request approved successfully',
+      message: 'Rental request approved and advance payment initiated successfully',
       request: request
     });
   } catch (error) {

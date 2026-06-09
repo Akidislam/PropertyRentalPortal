@@ -27,11 +27,13 @@ exports.getWallet = async (req, res) => {
   }
 };
 
+const WalletHistory = require('../models/WalletHistory');
+
 // Add coins to wallet
 exports.addCoins = async (req, res) => {
   try {
     const { userId } = req.params;
-    const { amount } = req.body;
+    const { amount, paymentMethod } = req.body;
 
     if (!amount || amount <= 0) {
       return res.status(400).json({ msg: 'Amount must be greater than 0' });
@@ -49,6 +51,19 @@ exports.addCoins = async (req, res) => {
     user.walletcoin = (user.walletcoin || 0) + Number(amount);
     await user.save();
 
+    // Create wallet history record
+    const history = new WalletHistory({
+      userId: user._id,
+      userType: user.role,
+      amount: Number(amount),
+      transactionType: 'topup',
+      paymentMethod: paymentMethod || 'card',
+      transactionId: `TOPUP_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
+      description: `Added ${amount} coins to wallet`,
+      status: 'completed'
+    });
+    await history.save();
+
     res.status(200).json({ 
       msg: `Successfully added ${amount} coins to wallet`,
       walletcoin: user.walletcoin
@@ -63,7 +78,7 @@ exports.addCoins = async (req, res) => {
 exports.deductCoins = async (req, res) => {
   try {
     const { userId } = req.params;
-    const { amount } = req.body;
+    const { amount, reason } = req.body;
 
     if (!amount || amount <= 0) {
       return res.status(400).json({ msg: 'Amount must be greater than 0' });
@@ -80,6 +95,19 @@ exports.deductCoins = async (req, res) => {
 
     user.walletcoin = (user.walletcoin || 0) - Number(amount);
     await user.save();
+
+    // Create wallet history record
+    const history = new WalletHistory({
+      userId: user._id,
+      userType: user.role,
+      amount: Number(amount),
+      transactionType: 'payment',
+      paymentMethod: 'wallet', // internal deduction
+      transactionId: `DEDUCT_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
+      description: reason || `Deducted ${amount} coins from wallet`,
+      status: 'completed'
+    });
+    await history.save();
 
     res.status(200).json({ 
       msg: `Successfully deducted ${amount} coins`,
